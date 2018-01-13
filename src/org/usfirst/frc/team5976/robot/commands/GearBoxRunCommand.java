@@ -16,6 +16,11 @@ public class GearBoxRunCommand extends Command{
 		this.speed = speed;
 		
 	}
+	
+	public GearBoxRunCommand(long timeMS, double speed){
+		this.timeMS = timeMS;
+		this.speed = speed;
+	}
 
 	protected void initialize(){
 		super.initialize();
@@ -24,12 +29,25 @@ public class GearBoxRunCommand extends Command{
 	}
 	
 	protected void execute(){
-		driveTrain.getRobotDrive().tankDrive(speed, speed);
+		//driveTrain.getRobotDrive().tankDrive(speed, speed);
+		//driveTrain.getLeftMaster().getBusVoltage();
+		driveTrain.leftMaster.set(speed);
+		driveTrain.leftSlave.set(speed);
+		driveTrain.leftMaster.getBusVoltage();
+		driveTrain.leftSlave.getBusVoltage();
+		System.out.println(System.currentTimeMillis() - t0);
 	}
 	
 	@Override
-	protected boolean isFinished() {
-		return System.currentTimeMillis() - t0 >= timeMS;
+	protected boolean isFinished() {   
+		driveTrain.leftMaster.getBusVoltage();
+		driveTrain.leftSlave.getBusVoltage();
+		if (System.currentTimeMillis() - t0 >= timeMS){
+			driveTrain.leftMaster.set(0);
+			driveTrain.leftSlave.set(0);
+			return true;
+		}
+		return false;
 	}
 
 }

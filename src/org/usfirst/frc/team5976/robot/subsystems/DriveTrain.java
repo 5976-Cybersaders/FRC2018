@@ -12,9 +12,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveTrain extends Subsystem {
 	private DifferentialDrive robotDrive;
-	private WPI_TalonSRX leftMaster, leftSlave;//, rightMaster, rightSlave;
+	public WPI_TalonSRX leftMaster, leftSlave;//, rightMaster, rightSlave;
 	private PowerDistributionPanel pdp;
 	private OI oi;
+//	public WPI_TalonSRX leftMaster = new WPI_TalonSRX(RobotMap.LEFT_MASTER);
+//	public WPI_TalonSRX leftSlave = new WPI_TalonSRX(RobotMap.LEFT_SLAVE);
+	
 	
 	public DriveTrain(OI oi) {
 		super();
@@ -23,11 +26,12 @@ public class DriveTrain extends Subsystem {
 		leftSlave = new WPI_TalonSRX(RobotMap.LEFT_SLAVE);
 		//rightMaster = new WPI_TalonSRX(RobotMap.RIGHT_MASTER);
 		//rightSlave = new WPI_TalonSRX(RobotMap.RIGHT_SLAVE);
+
 		pdp = new PowerDistributionPanel();
 		this.oi = oi;
 		
 		//Master motors should always be the motor in front
-		robotDrive = new DifferentialDrive(leftMaster, leftMaster/*, rightMaster*/);
+//		robotDrive = new DifferentialDrive(leftMaster/*, rightMaster*/);
 		System.out.println("END INIT DriveTrain");
 	}
 	

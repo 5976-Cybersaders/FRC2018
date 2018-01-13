@@ -53,6 +53,10 @@ public class OI {
 		
 	}
 	
+	public OI(){
+		
+	}
+	
 	public XboxController getDriveController() {
 		return DRIVE_CONTROLLER;
 	}
