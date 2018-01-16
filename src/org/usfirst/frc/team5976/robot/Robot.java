@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team5976.robot.commands.GearBoxCommandGroup;
 import org.usfirst.frc.team5976.robot.commands.GearBoxRunCommand;
 import org.usfirst.frc.team5976.robot.commands.TestCommandGroup;
 import org.usfirst.frc.team5976.robot.subsystems.DriveTrain;
@@ -36,7 +35,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		oi = new OI();
+		oi = new OI(pneumatic);
 		driveTrain = new DriveTrain(oi);
 		//chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());

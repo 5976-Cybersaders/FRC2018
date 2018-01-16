@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5976.robot;
 
+import org.usfirst.frc.team5976.robot.commands.CompressorOnCommand;
 import org.usfirst.frc.team5976.robot.commands.TeleOpMoveSolenoidCommand;
 import org.usfirst.frc.team5976.robot.subsystems.PneumaticsTester;
 
@@ -40,17 +41,18 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
-	private XBoxButton solenoidForward, solenoidReverse;
+	private XBoxButton solenoidForward, solenoidReverse, compressorOn;
 	
 	private final XboxController DRIVE_CONTROLLER = new XboxController(0);
 	
 	public OI(PneumaticsTester pneumatic){
 		solenoidForward = new XBoxButton(DRIVE_CONTROLLER, 5);
 		solenoidReverse = new XBoxButton(DRIVE_CONTROLLER, 6);
+		compressorOn = new XBoxButton(DRIVE_CONTROLLER, 4);
 		
 		solenoidForward.whenPressed(new TeleOpMoveSolenoidCommand(pneumatic, DoubleSolenoid.Value.kForward));
 		solenoidReverse.whenPressed(new TeleOpMoveSolenoidCommand(pneumatic, DoubleSolenoid.Value.kReverse));	
-		
+		compressorOn.whenPressed(new CompressorOnCommand(pneumatic.getCompressor()));
 	}
 	
 	public OI(){

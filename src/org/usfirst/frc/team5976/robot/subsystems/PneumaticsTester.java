@@ -25,4 +25,7 @@ public class PneumaticsTester extends Subsystem{
 		return doubleSolenoid;
 	}
 	
+	public Compressor getCompressor(){
+		return compressor;
+	}
 }

@@ -10,6 +10,7 @@ public class PneumaticsOff extends Command{
 	
 	public PneumaticsOff(PneumaticsTester pneumatic){
 		this.pneumatic = pneumatic;
+		requires(pneumatic);
 		
 	}
 	
