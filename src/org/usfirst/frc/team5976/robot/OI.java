@@ -1,12 +1,12 @@
 package org.usfirst.frc.team5976.robot;
 
-import org.usfirst.frc.team5976.robot.commands.CompressorOnCommand;
 import org.usfirst.frc.team5976.robot.commands.TeleOpMoveSolenoidCommand;
+import org.usfirst.frc.team5976.robot.commands.CompressorOnCommand;
 import org.usfirst.frc.team5976.robot.subsystems.PneumaticsTester;
+import org.usfirst.frc.team5976.robot.XBoxButton;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.buttons.Button;
 
 
 /**

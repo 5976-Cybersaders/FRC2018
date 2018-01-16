@@ -15,6 +15,10 @@ public class SmartValue {
 		return SmartDashboard.getNumber(key, defaultValue);
 	}
 	
+	public int getIntValue(){
+		return (int) getValue();
+	}
+	
 	public String getKey() {
 		return key;
 	}

@@ -12,26 +12,23 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveTrain extends Subsystem {
 	private DifferentialDrive robotDrive;
-	public WPI_TalonSRX leftMaster, leftSlave;//, rightMaster, rightSlave;
+	public WPI_TalonSRX leftMaster, leftSlave, rightMaster, rightSlave;
 	private PowerDistributionPanel pdp;
 	private OI oi;
-//	public WPI_TalonSRX leftMaster = new WPI_TalonSRX(RobotMap.LEFT_MASTER);
-//	public WPI_TalonSRX leftSlave = new WPI_TalonSRX(RobotMap.LEFT_SLAVE);
-	
 	
 	public DriveTrain(OI oi) {
 		super();
 		System.out.println("START INIT DriveTrain");
 		leftMaster = new WPI_TalonSRX(RobotMap.LEFT_MASTER);
 		leftSlave = new WPI_TalonSRX(RobotMap.LEFT_SLAVE);
-		//rightMaster = new WPI_TalonSRX(RobotMap.RIGHT_MASTER);
-		//rightSlave = new WPI_TalonSRX(RobotMap.RIGHT_SLAVE);
+		rightMaster = new WPI_TalonSRX(RobotMap.RIGHT_MASTER);
+		rightSlave = new WPI_TalonSRX(RobotMap.RIGHT_SLAVE);
 
 		pdp = new PowerDistributionPanel();
 		this.oi = oi;
 		
-		//Master motors should always be the motor in front
-//		robotDrive = new DifferentialDrive(leftMaster/*, rightMaster*/);
+//		Master motors should always be the motor in front
+		robotDrive = new DifferentialDrive(leftMaster, rightMaster);
 		System.out.println("END INIT DriveTrain");
 	}
 	
@@ -60,17 +57,17 @@ public class DriveTrain extends Subsystem {
 		return leftMaster;
 	}
 
-	/*public WPI_TalonSRX getRightMaster() {
+	public WPI_TalonSRX getRightMaster() {
 		return rightMaster;
-	}*/
+	}
 	
 	public WPI_TalonSRX getLeftSlave() {
 		return leftSlave;
 	}
 
-	/*public WPI_TalonSRX getRightSlave() {
-		//return rightSlave;
-	}*/
+	public WPI_TalonSRX getRightSlave() {
+		return rightSlave;
+	}
 	
 	public PowerDistributionPanel getPDP() {
 		return pdp;

@@ -1,4 +1,7 @@
-package org.usfirst.frc.team5976.robot.commands;
+package org.usfirst.frc.team5976.robot.commands.autonomous;
+
+import org.usfirst.frc.team5976.robot.commands.PrintCommand1;
+import org.usfirst.frc.team5976.robot.commands.PrintCommand2;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

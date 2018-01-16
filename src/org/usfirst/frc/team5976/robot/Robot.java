@@ -9,8 +9,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team5976.robot.commands.GearBoxRunCommand;
-import org.usfirst.frc.team5976.robot.commands.TestCommandGroup;
+import org.usfirst.frc.team5976.robot.commands.autonomous.TestCommandGroup;
 import org.usfirst.frc.team5976.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team5976.robot.subsystems.GrabberSubsystem;
+import org.usfirst.frc.team5976.robot.subsystems.LiftSubsystem;
 import org.usfirst.frc.team5976.robot.subsystems.PneumaticsTester;
 
 /**
@@ -25,6 +27,9 @@ public class Robot extends IterativeRobot {
 	public static DriveTrain driveTrain;
 	public static OI oi;
 	public PneumaticsTester pneumatic;
+	public LiftSubsystem lift;
+	public GrabberSubsystem grabber;
+	
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -36,6 +41,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI(pneumatic);
+		//oi = new OI(); 
+		lift = new LiftSubsystem();
+		grabber = new GrabberSubsystem();
 		driveTrain = new DriveTrain(oi);
 		//chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -70,8 +78,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
-
+		//autonomousCommand = chooser.getSelected();
+		GameData gameData = GameDataAccess.getGameData();
+		autonomousCommand = gameData.getCommand();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -80,8 +89,7 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		autonomousCommand = new GearBoxRunCommand(driveTrain, 150000, 0.6);
-		//autonomousCommand = new GearBoxCommandGroup();
+		//autonomousCommand = new GearBoxRunCommand(driveTrain, 150000, 0.6);
 		//autonomousCommand = new TestCommandGroup();
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -119,6 +127,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		LiveWindow.run();
+		//LiveWindow.run();
 	}
 }

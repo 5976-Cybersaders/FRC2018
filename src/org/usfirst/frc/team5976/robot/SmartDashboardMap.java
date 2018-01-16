@@ -8,6 +8,7 @@ public class SmartDashboardMap {
 	public static final SmartValue DRIVE1 = new SmartValue("Drive 1", 61);
 	public static final SmartValue DRIVE2 = new SmartValue("Drive 2", 37);
 	public static final SmartValue ANGLE = new SmartValue("Angle", -60);
+	public static final SmartValue POSITION = new SmartValue("Position", 0);
 	
 	public static void reportAll() {
 		report(kP);
