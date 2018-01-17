@@ -16,8 +16,6 @@ public class GrabberCommand extends Command {
 	
 	@Override
 	protected boolean isFinished() {
-		
-		
 		return true;
 	}
 
