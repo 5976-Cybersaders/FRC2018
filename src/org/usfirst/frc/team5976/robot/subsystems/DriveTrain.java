@@ -24,7 +24,7 @@ public class DriveTrain extends Subsystem {
 		rightMaster = new WPI_TalonSRX(RobotMap.RIGHT_MASTER);
 		rightSlave = new WPI_TalonSRX(RobotMap.RIGHT_SLAVE);
 
-		pdp = new PowerDistributionPanel();
+		//pdp = new PowerDistributionPanel();
 		this.oi = oi;
 		
 //		Master motors should always be the motor in front

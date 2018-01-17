@@ -40,8 +40,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		oi = new OI(pneumatic);
-		//oi = new OI(); 
+		//oi = new OI(pneumatic);
+		oi = new OI(); 
 		lift = new LiftSubsystem();
 		grabber = new GrabberSubsystem();
 		driveTrain = new DriveTrain(oi);

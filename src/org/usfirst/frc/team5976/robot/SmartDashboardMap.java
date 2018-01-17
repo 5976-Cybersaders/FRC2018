@@ -11,6 +11,7 @@ public class SmartDashboardMap {
 	public static final SmartValue POSITION = new SmartValue("Position", 0);
 	
 	public static void reportAll() {
+		//Must report all SmartValues for them to appear on the SmartDashboard
 		report(kP);
 		report(kI);
 		report(kD);
@@ -18,6 +19,7 @@ public class SmartDashboardMap {
 		report(DRIVE1);
 		report(DRIVE2);
 		report(ANGLE);
+		report(POSITION);
 	}
 	
 	private static void report(SmartValue variable) {
