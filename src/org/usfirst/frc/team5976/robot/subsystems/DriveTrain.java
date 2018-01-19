@@ -25,8 +25,8 @@ public class DriveTrain extends Subsystem {
 		rightSlave = new WPI_TalonSRX(RobotMap.RIGHT_SLAVE);
 
 		//pdp = new PowerDistributionPanel();
-		this.oi = oi;
 		
+		this.oi = oi;
 //		Master motors should always be the motor in front
 		robotDrive = new DifferentialDrive(leftMaster, rightMaster);
 		System.out.println("END INIT DriveTrain");

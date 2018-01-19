@@ -22,4 +22,8 @@ public class SmartValue {
 	public String getKey() {
 		return key;
 	}
+	public double getDouble() {
+		// TODO Auto-generated method stub
+		return getValue();
+	}
 }
