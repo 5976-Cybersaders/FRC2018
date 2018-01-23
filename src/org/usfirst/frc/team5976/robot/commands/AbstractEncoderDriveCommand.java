@@ -9,12 +9,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public abstract class AbstractEncoderDriveCommand extends Command {
 	protected DriveTrain driveTrain;
 	protected WPI_TalonSRX leftMaster, leftSlave, rightMaster, rightSlave;
-	protected double revolutions;
+	protected double ticks;
 	protected int stableCount;
-	protected int printCounter = 10, printInterval = 10;
+	protected int printCounter = 1, printInterval = 1;
 	private double previousError;
 	private long t0 = 0;
-	protected int allowableError = 10;
+	protected int allowableError = 100;
 	private double currentError;
 
 	// Wheel Values
@@ -29,7 +29,7 @@ public abstract class AbstractEncoderDriveCommand extends Command {
 		rightMaster = driveTrain.getRightMaster();
 		rightSlave = driveTrain.getRightSlave();
 
-		revolutions = 0;
+		ticks = 0;
 		stableCount = 0;
 		previousError = 9999999;
 		requires(driveTrain);
@@ -49,15 +49,15 @@ public abstract class AbstractEncoderDriveCommand extends Command {
 	}
 
 	protected void report(WPI_TalonSRX talon) {
-		//ReportHelper.report(talon, this);
+		ReportHelper.report(talon, this);
 	}
 
 	protected void reportExecute(WPI_TalonSRX talon, String side, int pdpPort) {
-		//ReportHelper.reportExecute(talon, side, driveTrain.getPdp(), pdpPort, stableCount, currentError);
+		ReportHelper.reportExecute(talon, side, driveTrain.getPDP(), pdpPort, stableCount, currentError);
 	}
 
-	protected double toRevolutions(double inches) {
-		return inches / (Math.PI * DIAMETER);
+	protected double toTicks(double inches) {
+		return inches / (Math.PI * DIAMETER) * 4096;
 	}
 
 	@Override

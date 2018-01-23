@@ -18,8 +18,8 @@ public class TeleOpTankDrive extends Command {
 	private boolean speedReduced;
 	
 	public TeleOpTankDrive(XboxController driveController, DriveTrain driveTrain) {
-		robotDrive = driveTrain.getRobotDrive();
 		this.driveTrain = driveTrain;
+		robotDrive = new DifferentialDrive(driveTrain.getLeftMaster(), driveTrain.getRightMaster());
 		this.driveController = driveController;
 		pdp = driveTrain.getPDP();
 		speedReduced = false;

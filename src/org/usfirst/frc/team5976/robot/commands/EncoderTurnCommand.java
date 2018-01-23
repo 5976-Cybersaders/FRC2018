@@ -29,10 +29,9 @@ public class EncoderTurnCommand extends AbstractEncoderDriveCommand {
 			super.initialize();
 			if (smartValue != null)
 				angle = smartValue.getDouble();
-			revolutions = toRevolutions(angle);
+			ticks = toTicks(angle);
 			allowableError = (int)SmartDashboardMap.ALLOWABLE_ERROR.getDouble();
-			if (revolutions > 0) {
-				//TODO:
+			if (ticks > 0) {//Right Turn
 				leftMaster.selectProfileSlot(0, 0);
 				rightMaster.selectProfileSlot(1, 0);
 			}
@@ -40,23 +39,22 @@ public class EncoderTurnCommand extends AbstractEncoderDriveCommand {
 				leftMaster.selectProfileSlot(1, 0);
 				rightMaster.selectProfileSlot(0, 0);
 			}
-			System.out.println("Starting command drive turn angle " + angle + " revolutions " + revolutions);
+			System.out.println("Starting command drive turn angle " + angle + " ticks " + ticks);
 			leftMaster.set(ControlMode.Position, 0);
 			rightMaster.set(ControlMode.Position, 0);
 			report(leftMaster);
 			report(rightMaster);
 			report(leftSlave);
 			report(rightSlave);
-			
 		}
 		
 		protected void execute() {
 			SmartDashboard.putNumber("Left Revolutions", leftMaster.getSelectedSensorPosition(0));
 			SmartDashboard.putNumber("Right Revolutions", rightMaster.getSelectedSensorPosition(0));
-			leftMaster.set(-revolutions);
-			leftSlave.set(leftMaster.getDeviceID());
-			rightMaster.set(-revolutions);
-			rightSlave.set(rightMaster.getDeviceID());
+			leftMaster.set(ControlMode.Position, ticks);
+			leftSlave.follow(leftMaster);
+			rightMaster.set(ControlMode.Position, -ticks);
+			rightSlave.follow(rightMaster);
 
 			if (printCounter == printInterval) {
 				reportExecute(leftMaster, "Left Master", RobotMap.LEFT_MASTER_PDP);
@@ -71,8 +69,8 @@ public class EncoderTurnCommand extends AbstractEncoderDriveCommand {
 
 		}
 		
-		protected double toRevolutions(double angle){
-			return super.toRevolutions((angle/360)*(RobotMap.TURN_DIAMETER*Math.PI));
+		protected double toTicks(double angle){
+			return super.toTicks((angle/360)*(RobotMap.TURN_DIAMETER*Math.PI));
 		}
 		
 		

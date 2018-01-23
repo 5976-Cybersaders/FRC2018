@@ -1,6 +1,5 @@
 package org.usfirst.frc.team5976.robot.commands;
 
-import org.usfirst.frc.team5976.robot.RobotMap;
 import org.usfirst.frc.team5976.robot.SmartDashboardMap;
 import org.usfirst.frc.team5976.robot.subsystems.DriveTrain;
 
@@ -10,51 +9,49 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class EncoderInit extends Command {
+public class EncoderInitCommand extends Command {
 	private WPI_TalonSRX leftMaster, rightMaster, leftSlave, rightSlave;
-	private boolean inversion = false;
+	private boolean inversion = true;
 
-	public EncoderInit(DriveTrain driveTrain) {
+	public EncoderInitCommand(DriveTrain driveTrain) {
 		leftMaster = driveTrain.getLeftMaster();
-		leftSlave = driveTrain.getLeftSlave();
 		rightMaster = driveTrain.getRightMaster();
+		leftSlave = driveTrain.getLeftSlave();
 		rightSlave = driveTrain.getRightSlave();
 		requires(driveTrain);
 	}
 
 	protected void initialize() {
 		initMaster(leftMaster, -1);
+		leftMaster.setInverted(inversion);
+		leftSlave.setInverted(inversion);
 		initMaster(rightMaster, 1);
-		initialize(leftMaster);
-		initialize(rightMaster);
-		initSlave(leftSlave, RobotMap.LEFT_MASTER);
-		initSlave(rightSlave, RobotMap.RIGHT_MASTER);
+		
+		report(leftMaster, "Left Master");
+		report(rightMaster, "Right Master");
+		report(leftSlave, "Left Slave");
+		report(rightSlave, "Right Slave");
 	}
-
-	protected void initialize(WPI_TalonSRX talon) {
-		//talon.reset();
-		//talon.enable();
-		talon.set(ControlMode.Position, 0);
+	
+	protected void report(WPI_TalonSRX talon, String name) {
+		System.out.println(name);
+		ReportHelper.report(talon, this);
 	}
 
 	protected void initMaster(WPI_TalonSRX talon, int side) {
-		//talon.setControlMode(ControlMode.Position);
-		//talon.set(0);
-		talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0); //TODO: Check what timeout value should be
-		//talon.setEncPosition(0);
-		
-		//TODO:
-		// Set values here
-		// Profile 1 for Both
+		talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
+		talon.setSelectedSensorPosition(0, 0, 0);
+		talon.set(ControlMode.Position, 0);
 		
 		talon.selectProfileSlot(1, 0);
 		talon.configClosedloopRamp(SmartDashboardMap.RAMP_RATE.getDouble(), 0);
+		
 		if (side == -1){//Left
 			talon.config_kP(0, SmartDashboardMap.kPRL.getDouble(), 0);
 			talon.config_kI(0, SmartDashboardMap.kIRL.getDouble(), 0);
 			talon.config_kD(0, SmartDashboardMap.kDRL.getDouble(), 0);
 			
-			talon.selectProfileSlot(1, 0);
+			talon.selectProfileSlot(0, 0);
 			talon.config_kP(0, SmartDashboardMap.kPFL.getDouble(), 0);
 			talon.config_kI(0, SmartDashboardMap.kIFL.getDouble(), 0);
 			talon.config_kD(0, SmartDashboardMap.kDFL.getDouble(), 0);
@@ -71,26 +68,25 @@ public class EncoderInit extends Command {
 			talon.config_kD(0, SmartDashboardMap.kDFR.getDouble(), 0);
 
 		}
-		// Profile 0 For Both
-		talon.configPeakOutputForward(SmartDashboardMap.PEAK_VOLTAGE.getDouble(), 0);
-		talon.configPeakOutputReverse(SmartDashboardMap.PEAK_VOLTAGE.getDouble(), 0);
+
+		//talon.configPeakCurrentLimit(40, 0);
+		///talon.configPeakCurrentDuration(0, 0);
+		talon.configPeakOutputForward(1, 0);
+		talon.configPeakOutputReverse(-1, 0);
+		
+		talon.configClosedloopRamp(SmartDashboardMap.RAMP_RATE.getDouble(), 0);
+		
 		System.out.println("Setting allowable error to " + SmartDashboardMap.ALLOWABLE_ERROR.getDouble());
 		talon.configAllowableClosedloopError(0, (int) SmartDashboardMap.ALLOWABLE_ERROR.getDouble(), 0);
 		//talon.enableControl();
 		
-		talon.configNominalOutputForward(SmartDashboardMap.NOMINAL_VOLTAGE.getDouble(), 0);
-		talon.configNominalOutputForward(SmartDashboardMap.NOMINAL_VOLTAGE.getDouble(), 0);
+		talon.configNominalOutputForward(.2, 0);
+		talon.configNominalOutputReverse(-.2, 0);
 		
-	}
-
-	protected void initSlave(WPI_TalonSRX talon, int masterID) {
-		talon.set(ControlMode.Follower, masterID);
-		//talon.enable();
 	}
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 }
