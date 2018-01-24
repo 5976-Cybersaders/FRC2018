@@ -4,11 +4,9 @@ package org.usfirst.frc.team5976.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team5976.robot.commands.GearBoxRunCommand;
 import org.usfirst.frc.team5976.robot.commands.autonomous.TestCommandGroup;
 import org.usfirst.frc.team5976.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5976.robot.subsystems.GrabberSubsystem;
@@ -41,7 +39,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		//oi = new OI(pneumatic);
-		oi = new OI(); 
+		oi = new OI();
 		lift = new LiftSubsystem();
 		grabber = new GrabberSubsystem();
 		driveTrain = new DriveTrain(oi);
@@ -79,10 +77,19 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		//autonomousCommand = chooser.getSelected();
-		GameData gameData = GameDataAccess.getGameData();
+		GameData gameData = GameDataAccess.getGameData(driveTrain);
 		//autonomousCommand = gameData.getCommand();
 		autonomousCommand = new TestCommandGroup(driveTrain);
-		
+		/*
+		 * String autoSelected = SmartDashboard.getString("Auto Selector",
+		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
+		 * = new MyAutoCommand(); break; case "Default Auto": default:
+		 * autonomousCommand = new ExampleCommand(); break; }
+		 */
+
+		// schedule the autonomous command (example)
+		//autonomousCommand = new GearBoxRunCommand(driveTrain, 150000, 0.6);
+		//autonomousCommand = new TestCommandGroup();
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}

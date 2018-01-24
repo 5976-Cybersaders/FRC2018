@@ -46,6 +46,7 @@ public class EncoderTurnCommand extends AbstractEncoderDriveCommand {
 			report(rightMaster);
 			report(leftSlave);
 			report(rightSlave);
+			
 		}
 		
 		protected void execute() {

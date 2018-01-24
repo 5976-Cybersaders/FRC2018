@@ -1,19 +1,24 @@
 package org.usfirst.frc.team5976.robot;
 
+import org.usfirst.frc.team5976.robot.commands.EncoderDriveStraightCommand;
 import org.usfirst.frc.team5976.robot.commands.autonomous.CrossLineCommandGroup;
 import org.usfirst.frc.team5976.robot.commands.autonomous.DeliverScaleLeftCommandGroup;
 import org.usfirst.frc.team5976.robot.commands.autonomous.DeliverScaleRightCommandGroup;
 import org.usfirst.frc.team5976.robot.commands.autonomous.DeliverSwitchLeftCommandGroup;
 import org.usfirst.frc.team5976.robot.commands.autonomous.DeliverSwitchRightCommandGroup;
+import org.usfirst.frc.team5976.robot.commands.autonomous.TestCommandGroup;
+import org.usfirst.frc.team5976.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class GameData {
 	private String data;
 	private SmartValue position;
+	private DriveTrain driveTrain;
 
-	public GameData(String data) {
+	public GameData(DriveTrain driveTrain, String data) {
 		this.data = data;
+		this.driveTrain = driveTrain;
 		position = SmartDashboardMap.POSITION;
 	}
 
@@ -43,6 +48,7 @@ public class GameData {
 
 	public Command getCommand() {
 		Command command;
+		System.out.println("Position Value:" + position.getIntValue());
 		switch (position.getIntValue()) {
 			case Positions.LEFT:
 				command = getCommandLeft();
@@ -52,6 +58,9 @@ public class GameData {
 				break;
 			case Positions.RIGHT:
 				command = getCommandRight();
+				break;
+			case 3:
+				command = new TestCommandGroup(driveTrain);
 				break;
 			default:
 				command = new CrossLineCommandGroup();

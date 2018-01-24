@@ -22,7 +22,9 @@ public class DriveTrain extends Subsystem {
 		leftSlave = new WPI_TalonSRX(RobotMap.LEFT_SLAVE);
 		rightMaster = new WPI_TalonSRX(RobotMap.RIGHT_MASTER);
 		rightSlave = new WPI_TalonSRX(RobotMap.RIGHT_SLAVE);
-		pdp = new PowerDistributionPanel();
+
+		//pdp = new PowerDistributionPanel();
+		
 		this.oi = oi;
 		System.out.println("END INIT DriveTrain");
 	}

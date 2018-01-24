@@ -38,27 +38,29 @@ public class EncoderDriveStraightCommand extends AbstractEncoderDriveCommand {
 			leftMaster.selectProfileSlot(1, 0);
 			rightMaster.selectProfileSlot(1, 0);
 		}
-		System.out.println("Starting command drive straight inches " + inches + " ticks " + ticks);
-		leftMaster.set(ControlMode.Position, 0);
-		rightMaster.set(ControlMode.Position, 0);
+		System.out.println("Starting command drive straight inches " + inches + " Ticks " + ticks);
+		leftMaster.setSelectedSensorPosition(0, 0, 0);
+		rightMaster.setSelectedSensorPosition(0, 0, 0);
 		report(leftMaster);
 		report(rightMaster);
 		report(leftSlave);
 		report(rightSlave);
+
 	}
 
 	protected void execute() {
 		SmartDashboard.putNumber("Left Revolutions", leftMaster.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Right Revolutions", rightMaster.getSelectedSensorPosition(0));
-		
 		leftMaster.set(ControlMode.Position, ticks);
+		leftSlave.follow(leftMaster);
 		rightMaster.set(ControlMode.Position, ticks);
-			
+		rightSlave.follow(rightMaster);
+
 		if (printCounter == printInterval) {
 			reportExecute(leftMaster, "Left Master", RobotMap.LEFT_MASTER_PDP);
-//			reportExecute(leftSlave, "Left Slave", RobotMap.LEFT_SLAVE_PDP);
+			// reportExecute(leftSlave, "Left Slave", RobotMap.LEFT_SLAVE_PDP);
 			reportExecute(rightMaster, "Right Master", RobotMap.RIGHT_MASTER_PDP);
-//			reportExecute(rightSlave, "Right Slave", RobotMap.RIGHT_SLAVE_PDP);
+			// reportExecute(rightSlave, "Right Slave", RobotMap.RIGHT_SLAVE_PDP);
 			System.out.println();
 			printCounter = 0;
 		} else {

@@ -320,3 +320,7 @@ pip-log.txt
 # Mac crap
 
 .DS_Store
+
+.idea
+
+FRC2018.iml
