@@ -34,8 +34,7 @@ public class EncoderInitCommand extends Command {
 	}
 
 	protected void report(WPI_TalonSRX talon, String name) {
-		System.out.println(name);
-		ReportHelper.report(talon, this);
+		ReportHelper.report(talon, this, name);
 	}
 
 	protected void initMaster(WPI_TalonSRX talon, int side) {

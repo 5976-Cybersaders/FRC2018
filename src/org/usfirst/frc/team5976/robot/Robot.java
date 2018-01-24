@@ -77,9 +77,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		//autonomousCommand = chooser.getSelected();
-		GameData gameData = GameDataAccess.getGameData(driveTrain);
-		//autonomousCommand = gameData.getCommand();
-		autonomousCommand = new TestCommandGroup(driveTrain);
+		GameData gameData = GameDataAccess.getGameData(driveTrain, grabber);
+		autonomousCommand = gameData.getCommand();
+		//autonomousCommand = new TestCommandGroup(driveTrain);
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand

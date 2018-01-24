@@ -40,16 +40,16 @@ public abstract class AbstractEncoderDriveCommand extends Command {
 		stableCount = 0;
 		previousError = 1000000;
 
-		report(driveTrain.getLeftMaster());
-		report(driveTrain.getLeftSlave());
-		report(driveTrain.getRightMaster());
-		report(driveTrain.getRightSlave());
+		report(driveTrain.getLeftMaster(), "Left Master");
+		report(driveTrain.getLeftSlave(), "Left Slave");
+		report(driveTrain.getRightMaster(), "Right Master");
+		report(driveTrain.getRightSlave(), "Right Slave");
 
 		t0 = System.currentTimeMillis();
 	}
 
-	protected void report(WPI_TalonSRX talon) {
-		ReportHelper.report(talon, this);
+	protected void report(WPI_TalonSRX talon, String name) {
+		ReportHelper.report(talon, this, name);
 	}
 
 	protected void reportExecute(WPI_TalonSRX talon, String side, int pdpPort) {

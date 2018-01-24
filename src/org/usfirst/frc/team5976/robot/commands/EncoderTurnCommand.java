@@ -42,10 +42,10 @@ public class EncoderTurnCommand extends AbstractEncoderDriveCommand {
 			System.out.println("Starting command drive turn angle " + angle + " ticks " + ticks);
 			leftMaster.set(ControlMode.Position, 0);
 			rightMaster.set(ControlMode.Position, 0);
-			report(leftMaster);
-			report(rightMaster);
-			report(leftSlave);
-			report(rightSlave);
+			report(leftMaster, "Left Master");
+			report(rightMaster, "Right Master");
+			report(leftSlave, "Left Slave");
+			report(rightSlave, "Right Slave");
 			
 		}
 		

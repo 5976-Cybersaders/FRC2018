@@ -1,6 +1,5 @@
 package org.usfirst.frc.team5976.robot;
 
-import org.usfirst.frc.team5976.robot.commands.EncoderDriveStraightCommand;
 import org.usfirst.frc.team5976.robot.commands.autonomous.CrossLineCommandGroup;
 import org.usfirst.frc.team5976.robot.commands.autonomous.DeliverScaleLeftCommandGroup;
 import org.usfirst.frc.team5976.robot.commands.autonomous.DeliverScaleRightCommandGroup;
@@ -8,6 +7,7 @@ import org.usfirst.frc.team5976.robot.commands.autonomous.DeliverSwitchLeftComma
 import org.usfirst.frc.team5976.robot.commands.autonomous.DeliverSwitchRightCommandGroup;
 import org.usfirst.frc.team5976.robot.commands.autonomous.TestCommandGroup;
 import org.usfirst.frc.team5976.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team5976.robot.subsystems.GrabberSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -15,10 +15,12 @@ public class GameData {
 	private String data;
 	private SmartValue position;
 	private DriveTrain driveTrain;
+	private GrabberSubsystem grabber;
 
-	public GameData(DriveTrain driveTrain, String data) {
+	public GameData(DriveTrain driveTrain, GrabberSubsystem grabber, String data) {
 		this.data = data;
 		this.driveTrain = driveTrain;
+		this.grabber = grabber;
 		position = SmartDashboardMap.POSITION;
 	}
 
@@ -75,7 +77,7 @@ public class GameData {
 			return new DeliverSwitchLeftCommandGroup();
 		}
 		if(isScaleLeft()){
-			return new DeliverScaleLeftCommandGroup();
+			return new DeliverScaleLeftCommandGroup(driveTrain, grabber);
 		}
 		return new CrossLineCommandGroup();
 	}

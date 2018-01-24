@@ -59,7 +59,7 @@ public class ReportHelper {
 	// SmartDashboard.putNumber(side + " Current", pdp.getCurrent(pdpPort));
 	// }
 
-	public static void report(WPI_TalonSRX talon, Command command) {
+	public static void report(WPI_TalonSRX talon, Command command, String name) {
 		System.out.println("INIT " + command);
 		System.out.println("Control Mode: " + talon.getControlMode());
 		System.out.println("Device ID" + talon.getDeviceID());
@@ -69,8 +69,10 @@ public class ReportHelper {
 		// System.out.println("PID Values: " + talon.getP() + " " + talon.getI() + " " +
 		// talon.getD());
 		System.out.println("Position: " + talon.getSelectedSensorPosition(0));
-		System.out.println("Closed Loop Target: " + talon.getClosedLoopTarget(0));
-		System.out.println("Closed Loop Error: " + talon.getClosedLoopError(0));
+		if (name.toLowerCase().endsWith("master")) {
+			System.out.println("Closed Loop Target: " + talon.getClosedLoopTarget(0));
+			System.out.println("Closed Loop Error: " + talon.getClosedLoopError(0));
+		}
 		System.out.println();
 	}
 }

@@ -12,17 +12,17 @@ public class ReleaseCubeCommand extends GrabberCommand {
 		super(grabber);
 	}
 	
-	@Override
-	protected boolean isFinished() {
-		
-		return true;
-	}
+//	@Override
+//	protected boolean isFinished() {
+//
+//		return true;
+//	}
 	
-	@Override
-	protected void execute() {
-		System.out.println("Running ReleaseCube");
-		
-	}
+//	@Override
+//	protected void execute() {
+//		System.out.println("Running ReleaseCube");
+//
+//	}
 	
 	
 	
