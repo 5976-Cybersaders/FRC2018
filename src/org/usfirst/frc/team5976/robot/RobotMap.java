@@ -13,11 +13,7 @@ public class RobotMap {
 	public static final int LEFT_SLAVE = 1;
 	public static final int RIGHT_MASTER = 4;
 	public static final int RIGHT_SLAVE = 3;
-	
-	//PWM
-	public static final int CLIMB_MOTOR = 0;
-	public static final int LEFT_SERVO = 1;
-	public static final int RIGHT_SERVO = 2;
+
 	//PDP
 	public static final int LEFT_MASTER_PDP = 13;
 	public static final int LEFT_SLAVE_PDP = 12;

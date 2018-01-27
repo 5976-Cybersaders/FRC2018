@@ -18,18 +18,9 @@ public class SmartDashboardMap {
 
 	// Talon
 	public static final SmartValue PEAK_VOLTAGE = new SmartValue("Peak Voltage", 0.5);
-	public static final SmartValue NOMINAL_VOLTAGE = new SmartValue("Nominal Voltage", 0.15);
+	public static final SmartValue NOMINAL_VOLTAGE = new SmartValue("Nominal Voltage", 0.25);
 	public static final SmartValue RAMP_RATE = new SmartValue("Ramp Rate", 0);
-	// public static final SmartValue RAMP_RATE_R = new SmartValue("Ramp Rate
-	// Right")
-
-	// Drive Straight Command Group
-	public static final SmartValue DRIVE_DISTANCE_1 = new SmartValue("DD 1", 18.8495);
-	public static final SmartValue DRIVE_DISTANCE_2 = new SmartValue("DD 2", -18.8495);
-	public static final SmartValue TIME = new SmartValue("Tiem", 500);
-
-	// Turn
-	public static final SmartValue ANGLE = new SmartValue("Angle", 90);
+	// public static final SmartValue RAMP_RATE_R = new SmartValue("Ramp Rate Right");
 
 	public static final SmartValue POSITION = new SmartValue("Position", 0);
 	
@@ -47,8 +38,6 @@ public class SmartDashboardMap {
 		report(kIRR);
 		report(kDRR);
 		report(ALLOWABLE_ERROR);
-		report(DRIVE_DISTANCE_1);
-		report(DRIVE_DISTANCE_2);
 		report(PEAK_VOLTAGE);
 		report(NOMINAL_VOLTAGE);
 	}
