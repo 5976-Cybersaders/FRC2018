@@ -10,41 +10,44 @@ import org.usfirst.frc.team5976.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5976.robot.subsystems.GrabberSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team5976.robot.subsystems.LiftSubsystem;
 
 public class GameData {
 	private String data;
 	private SmartValue position;
 	private DriveTrain driveTrain;
-	private GrabberSubsystem grabber;
+	private GrabberSubsystem grabberSubsystem;
+	private LiftSubsystem liftSubsystem;
 
-	public GameData(DriveTrain driveTrain, GrabberSubsystem grabber, String data) {
+	public GameData(Robot robot, String data) {
 		this.data = data;
-		this.driveTrain = driveTrain;
-		this.grabber = grabber;
+		driveTrain = robot.getDriveTrain();
+		grabberSubsystem = robot.getGrabber();
+		liftSubsystem = robot.getLift();
 		position = SmartDashboardMap.POSITION;
 	}
 
-	public boolean isAllianceSwitchLeft() {
+	private boolean isAllianceSwitchLeft() {
 		return data.charAt(0) == 'L';
 	}
-	
-	public boolean isAllianceSwitchRight() {
+
+	private boolean isAllianceSwitchRight() {
 		return !isAllianceSwitchLeft();
 	}
 
-	public boolean isScaleLeft() {
+	private boolean isScaleLeft() {
 		return data.charAt(1) == 'L';
 	}
-	
-	public boolean isScaleRight() {
+
+	private boolean isScaleRight() {
 		return !isScaleLeft();
 	}
 
 	public boolean isOpponentSwitchLeft() {
 		return data.charAt(2) == 'L';
 	}
-	
-	public boolean isOpponentSwitchRight() {
+
+	private boolean isOpponentSwitchRight() {
 		return !isOpponentSwitchLeft();
 	}
 
@@ -65,7 +68,7 @@ public class GameData {
 				command = new TestCommandGroup(driveTrain);
 				break;
 			default:
-				command = new CrossLineCommandGroup();
+				command = new CrossLineCommandGroup(driveTrain);
 				break;
 		}
 		System.out.println("Running " + command.getClass().getSimpleName());
@@ -74,26 +77,26 @@ public class GameData {
 
 	private Command getCommandLeft() {
 		if(isAllianceSwitchLeft()){
-			return new DeliverSwitchLeftCommandGroup();
+			return new DeliverSwitchLeftCommandGroup(driveTrain, grabberSubsystem);
 		}
 		if(isScaleLeft()){
-			return new DeliverScaleLeftCommandGroup(driveTrain, grabber);
+			return new DeliverScaleLeftCommandGroup(driveTrain, grabberSubsystem, liftSubsystem);
 		}
-		return new CrossLineCommandGroup();
+		return new CrossLineCommandGroup(driveTrain);
 	}
 
 	private Command getCommandMiddle() {
-		return new CrossLineCommandGroup();
+		return new CrossLineCommandGroup(driveTrain);
 	}
 
 	private Command getCommandRight() {
 		if(isAllianceSwitchRight()){
-			return new DeliverSwitchRightCommandGroup();
+			return new DeliverSwitchRightCommandGroup(driveTrain, grabberSubsystem);
 		}
 		if(isScaleRight()){
-			return new DeliverScaleRightCommandGroup();
+			return new DeliverScaleRightCommandGroup(driveTrain, grabberSubsystem, liftSubsystem);
 		}
-		return new CrossLineCommandGroup();
+		return new CrossLineCommandGroup(driveTrain);
 	}
 	
 	private static class Positions {

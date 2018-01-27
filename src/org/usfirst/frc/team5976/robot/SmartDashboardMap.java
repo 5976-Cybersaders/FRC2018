@@ -14,12 +14,12 @@ public class SmartDashboardMap {
 	public static final SmartValue kPRR = new SmartValue("P-Value RR", 0.04);
 	public static final SmartValue kIRR = new SmartValue("I-Value RR", 0);
 	public static final SmartValue kDRR = new SmartValue("D-Value RR", 0);
-	public static final SmartValue ALLOWABLE_ERROR = new SmartValue("Allowable Error", 20);
+	public static final SmartValue ALLOWABLE_ERROR = new SmartValue("Allowable Error", 100);
 
 	// Talon
-	public static final SmartValue PEAK_VOLTAGE = new SmartValue("Peak Voltage", 3.5);
-	public static final SmartValue NOMINAL_VOLTAGE = new SmartValue("Nominal Voltage", 2.2);
-	public static final SmartValue RAMP_RATE = new SmartValue("Ramp Rate", 1);
+	public static final SmartValue PEAK_VOLTAGE = new SmartValue("Peak Voltage", 0.5);
+	public static final SmartValue NOMINAL_VOLTAGE = new SmartValue("Nominal Voltage", 0.15);
+	public static final SmartValue RAMP_RATE = new SmartValue("Ramp Rate", 0);
 	// public static final SmartValue RAMP_RATE_R = new SmartValue("Ramp Rate
 	// Right")
 

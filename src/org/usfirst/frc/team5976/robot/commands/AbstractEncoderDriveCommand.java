@@ -16,6 +16,9 @@ public abstract class AbstractEncoderDriveCommand extends Command {
 	private long t0 = 0;
 	protected int allowableError = 100;
 	private double currentError;
+	
+	
+	protected boolean inversion = true;
 
 	// Wheel Values
 	private final int STABLE_COUNT_STOP = 20;

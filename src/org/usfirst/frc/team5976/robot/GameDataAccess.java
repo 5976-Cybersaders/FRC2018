@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 
 public class GameDataAccess {
 
-	public static GameData getGameData(DriveTrain driveTrain, GrabberSubsystem grabber) {
-		return new GameData(driveTrain, grabber, DriverStation.getInstance().getGameSpecificMessage());
+	public static GameData getGameData(Robot robot) {
+		return new GameData(robot, DriverStation.getInstance().getGameSpecificMessage());
 	}
 }

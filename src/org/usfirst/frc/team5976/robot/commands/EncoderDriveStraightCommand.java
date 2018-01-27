@@ -41,6 +41,10 @@ public class EncoderDriveStraightCommand extends AbstractEncoderDriveCommand {
 		System.out.println("Starting command drive straight inches " + inches + " Ticks " + ticks);
 		leftMaster.setSelectedSensorPosition(0, 0, 0);
 		rightMaster.setSelectedSensorPosition(0, 0, 0);
+		
+		leftMaster.setInverted(inversion);
+		leftSlave.setInverted(inversion);
+		
 		report(leftMaster, "Left Master");
 		report(rightMaster, "Right Master");
 		report(leftSlave, "Left Slave");

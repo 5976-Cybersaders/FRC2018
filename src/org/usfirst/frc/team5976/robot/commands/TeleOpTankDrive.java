@@ -1,13 +1,16 @@
 package org.usfirst.frc.team5976.robot.commands;
 
+import edu.wpi.first.wpilibj.MotorSafety;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import org.usfirst.frc.team5976.robot.subsystems.DriveTrain;
 
-import edu.wpi.first.wpilibj.XboxController;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TeleOpTankDrive extends Command {
 	DifferentialDrive robotDrive;
@@ -16,13 +19,16 @@ public class TeleOpTankDrive extends Command {
 	private static double expoFactor = 0.2;
 	private PowerDistributionPanel pdp;
 	private boolean speedReduced;
+	private WPI_TalonSRX leftMaster, rightMaster;
 	
 	public TeleOpTankDrive(XboxController driveController, DriveTrain driveTrain) {
 		this.driveTrain = driveTrain;
-		robotDrive = new DifferentialDrive(driveTrain.getLeftMaster(), driveTrain.getRightMaster());
 		this.driveController = driveController;
 		pdp = driveTrain.getPDP();
 		speedReduced = false;
+		
+		leftMaster = driveTrain.getLeftMaster();
+		rightMaster = driveTrain.getRightMaster();
 		requires(driveTrain);
 	}
 	
@@ -34,8 +40,32 @@ public class TeleOpTankDrive extends Command {
     }
 	
 	@Override
-	protected void execute() {
+	protected void initialize() {
+		leftMaster.setInverted(false);
+		leftMaster.setInverted(false);
+        initTalon(leftMaster);
+        initTalon(rightMaster);
+        SpeedControllerGroup leftSide = new SpeedControllerGroup(leftMaster, driveTrain.getLeftSlave());
+        SpeedControllerGroup rightSide = new SpeedControllerGroup(rightMaster, driveTrain.getRightSlave());
+		robotDrive = new DifferentialDrive(leftSide, rightSide);
+	}
+	
+	private void initTalon(WPI_TalonSRX talon) {
+		talon.selectProfileSlot(1, 0);
+		talon.configPeakOutputForward(1, 0);
+		talon.configPeakOutputReverse(-1, 0);
+		talon.configNominalOutputForward(0, 0);
+		talon.configNominalOutputReverse(0, 0);
 		
+		talon.selectProfileSlot(1, 0);
+		talon.configPeakOutputForward(1, 0);
+		talon.configPeakOutputReverse(-1, 0);
+		talon.configNominalOutputForward(0, 0);
+		talon.configNominalOutputReverse(0, 0);
+	}
+	
+	@Override
+	protected void execute() {
 		//System.out.println("Left Master Encoder Position " + driveTrain.getLeftMaster().getEncPosition() + " Right Master Encoder Position " + driveTrain.getRightMaster().getEncPosition());
 		//System.out.println("Current Left: " + ((pdp.getCurrent(2) + pdp.getCurrent(3))) + " Current Right: " + ((pdp.getCurrent(12) + pdp.getCurrent(13))) + "  Rio: "+pdp.getCurrent(8) + " Total Current:  " +pdp.getTotalCurrent());
 		//reportCurrent("Left Master Current", RobotMap.LEFT_MASTER_PDP);
@@ -64,6 +94,7 @@ public class TeleOpTankDrive extends Command {
 	@Override
 	protected void end() {
 		robotDrive.tankDrive(0, 0);
+		robotDrive = null;
 	}
 	
 	@Override

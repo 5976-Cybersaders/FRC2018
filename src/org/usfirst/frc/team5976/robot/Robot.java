@@ -22,11 +22,11 @@ import org.usfirst.frc.team5976.robot.subsystems.PneumaticsTester;
  */
 public class Robot extends IterativeRobot {
 
-	public static DriveTrain driveTrain;
-	public static OI oi;
-	public PneumaticsTester pneumatic;
-	public LiftSubsystem lift;
-	public GrabberSubsystem grabber;
+	public OI oi;
+	private DriveTrain driveTrain;
+	private PneumaticsTester pneumatic;
+	private LiftSubsystem lift;
+	private GrabberSubsystem grabber;
 	
 
 	Command autonomousCommand;
@@ -38,6 +38,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		SmartDashboardMap.reportAll();
 		//oi = new OI(pneumatic);
 		oi = new OI();
 		lift = new LiftSubsystem();
@@ -77,7 +78,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		//autonomousCommand = chooser.getSelected();
-		GameData gameData = GameDataAccess.getGameData(driveTrain, grabber);
+		GameData gameData = GameDataAccess.getGameData(this);
 		autonomousCommand = gameData.getCommand();
 		//autonomousCommand = new TestCommandGroup(driveTrain);
 		/*
@@ -127,5 +128,21 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		//LiveWindow.run();
+	}
+
+	public DriveTrain getDriveTrain() {
+		return driveTrain;
+	}
+
+	public PneumaticsTester getPneumatic() {
+		return pneumatic;
+	}
+
+	public LiftSubsystem getLift() {
+		return lift;
+	}
+
+	public GrabberSubsystem getGrabber() {
+		return grabber;
 	}
 }

@@ -42,7 +42,14 @@ public class EncoderInitCommand extends Command {
 		talon.setSelectedSensorPosition(0, 0, 0);
 		talon.set(ControlMode.Position, 0);
 		
+		double peakOutput = SmartDashboardMap.PEAK_VOLTAGE.getDouble();
+		double nominalOutput = SmartDashboardMap.NOMINAL_VOLTAGE.getDouble();
+		
 		talon.selectProfileSlot(1, 0);
+		talon.configPeakOutputForward(peakOutput, 0);
+		talon.configPeakOutputReverse(-peakOutput, 0);
+		talon.configNominalOutputForward(nominalOutput, 0);
+		talon.configNominalOutputReverse(-nominalOutput, 0);
 		talon.configClosedloopRamp(SmartDashboardMap.RAMP_RATE.getDouble(), 0);
 
 		if (side == -1){//Left
@@ -66,15 +73,18 @@ public class EncoderInitCommand extends Command {
 			talon.config_kD(0, SmartDashboardMap.kDFR.getDouble(), 0);
 
 		}
+		
 		// Profile 0 For Both
-		talon.configPeakOutputForward(SmartDashboardMap.PEAK_VOLTAGE.getDouble(), 0);
-		talon.configPeakOutputReverse(-SmartDashboardMap.PEAK_VOLTAGE.getDouble(), 0);
+		talon.configPeakOutputForward(peakOutput, 0);
+		talon.configPeakOutputReverse(-peakOutput, 0);
+		System.out.println("PEAK OUTPUT ----------->" + peakOutput);
+		System.out.println("!!!!!!! NOMINAL ------------->" + nominalOutput);
 		System.out.println("Setting allowable error to " + SmartDashboardMap.ALLOWABLE_ERROR.getDouble());
 		talon.configAllowableClosedloopError(0, SmartDashboardMap.ALLOWABLE_ERROR.getIntValue(), 0);
         talon.configClosedloopRamp(SmartDashboardMap.RAMP_RATE.getDouble(), 0);
 
-		talon.configNominalOutputForward(SmartDashboardMap.NOMINAL_VOLTAGE.getDouble(), 0);
-		talon.configNominalOutputReverse(-SmartDashboardMap.NOMINAL_VOLTAGE.getDouble(), 0);
+		talon.configNominalOutputForward(nominalOutput, 0);
+		talon.configNominalOutputReverse(-nominalOutput, 0);
 
 	}
 
