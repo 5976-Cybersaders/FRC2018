@@ -12,10 +12,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class EncoderDriveStraightCommand extends AbstractEncoderDriveCommand {
 
 	private double inches;
-	private SmartValue smartValue;
+	private SmartValue smartValue = null;
 
 	public EncoderDriveStraightCommand(DriveTrain driveTrain, double inches) {
 		super(driveTrain);
+		System.out.println("Received inches: " + inches );
 		this.inches = inches;
 	}
 
@@ -26,9 +27,10 @@ public class EncoderDriveStraightCommand extends AbstractEncoderDriveCommand {
 
 	protected void initialize() {
 		super.initialize();
-		if (smartValue != null)
-			inches = smartValue.getDouble();
+//		if (smartValue != null)
+//			inches = smartValue.getDouble();
 		ticks = toTicks(inches);
+		System.out.println("Using inches " + inches + " ticks ------>" + ticks);
 		allowableError = (int)SmartDashboardMap.ALLOWABLE_ERROR.getDouble();
 		if (ticks > 0) {
 			leftMaster.selectProfileSlot(0, 0);

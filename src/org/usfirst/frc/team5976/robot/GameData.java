@@ -53,8 +53,9 @@ public class GameData {
 
 	public Command getCommand() {
 		Command command;
-		System.out.println("Position Value:" + position.getIntValue());
-		switch (position.getIntValue()) {
+		int position = getPosition();
+		System.out.println("Position Value:" + position);
+		switch (position) {
 			case Positions.LEFT:
 				command = getCommandLeft();
 				break;
@@ -64,7 +65,7 @@ public class GameData {
 			case Positions.RIGHT:
 				command = getCommandRight();
 				break;
-			case 3:
+			case Positions.TEST:
 				command = new TestCommandGroup(driveTrain);
 				break;
 			default:
@@ -99,9 +100,18 @@ public class GameData {
 		return new CrossLineCommandGroup(driveTrain);
 	}
 	
+	private int getPosition() {
+		String stringPosition = position.getString().trim().toUpperCase();
+		if (stringPosition.equals("LEFT") || stringPosition.equals("" + Positions.LEFT)) return Positions.LEFT;
+		if (stringPosition.equals("RIGHT") || stringPosition.equals("" + Positions.RIGHT)) return Positions.RIGHT;
+		if (stringPosition.equals("TEST") || stringPosition.equals("" + Positions.TEST)) return Positions.TEST;
+		return Positions.MIDDLE;
+	}
+	
 	private static class Positions {
-		static final int LEFT = 0;
-		static final int MIDDLE = 1;
-		static final int RIGHT = 2;
+		static final int LEFT = -1;
+		static final int MIDDLE = 0;
+		static final int RIGHT = 1;
+		static final int TEST = 3;
 	}
 }

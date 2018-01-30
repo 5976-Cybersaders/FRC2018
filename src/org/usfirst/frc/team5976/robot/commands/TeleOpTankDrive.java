@@ -15,6 +15,7 @@ public class TeleOpTankDrive extends Command {
 	private XboxController controller;
 	
 	private static double expoFactor = 0.2;
+	private int count, interval;
 	
 	public TeleOpTankDrive(XboxController controller, DriveTrain driveTrain) {
 		this.controller = controller;
@@ -25,6 +26,7 @@ public class TeleOpTankDrive extends Command {
 		leftSide = new SpeedControllerGroup(leftMaster, leftSlave);
 		rightSide = new SpeedControllerGroup(rightMaster, rightSlave);
 		requires(driveTrain);
+		count = interval = 50;
 	}
 	
 	@Override
@@ -38,13 +40,28 @@ public class TeleOpTankDrive extends Command {
 	@Override
 	protected void execute() {
 		drive(-controller.getY(Hand.kLeft), -controller.getY(Hand.kRight));
+		reportExecute();
 	}
+
+	private void reportExecute() {
+	    if (count++ >= interval) {
+            ReportHelper.reportTeleOp(leftMaster, "Left Master");
+            ReportHelper.reportTeleOp(rightMaster, "Right Master");
+            System.out.println();
+            count = 0;
+        }
+    }
 	
 	private void drive(double leftSpeed, double rightSpeed) {
-//		leftSide.set(leftSpeed);
-//		rightSide.set(rightSpeed);
-		leftSide.set(adjustSpeed(leftSpeed));
-		rightSide.set(adjustSpeed(rightSpeed));
+	    if (controller.getBumper(Hand.kLeft)) {
+            leftSpeed /= 2;
+            rightSpeed /= 2;
+        }
+	    if (controller.getBumper(Hand.kRight)) {
+            rightSpeed = leftSpeed;
+        }
+        leftSide.set(adjustSpeed(leftSpeed));
+        rightSide.set(adjustSpeed(rightSpeed));
 	}
 	
 	public double adjustSpeed(double d){
@@ -78,4 +95,6 @@ public class TeleOpTankDrive extends Command {
 	protected void interrupted() {
 		end();
 	}
+
+
 }

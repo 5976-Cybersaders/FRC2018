@@ -22,7 +22,8 @@ public class SmartDashboardMap {
 	public static final SmartValue RAMP_RATE = new SmartValue("Ramp Rate", 0);
 	// public static final SmartValue RAMP_RATE_R = new SmartValue("Ramp Rate Right");
 
-	public static final SmartValue POSITION = new SmartValue("Position", 0);
+	public static final SmartValue POSITION = new SmartValue("Position", "RIGHT");
+	public static final SmartValue DELAY = new SmartValue("Delay (Seconds)", 0);
 	
 	public static void reportAll() {
 		report(kPFL);
@@ -40,6 +41,9 @@ public class SmartDashboardMap {
 		report(ALLOWABLE_ERROR);
 		report(PEAK_VOLTAGE);
 		report(NOMINAL_VOLTAGE);
+		report(RAMP_RATE);
+		report(POSITION);
+		report(DELAY);
 	}
 
 	private static void report(SmartValue variable) {

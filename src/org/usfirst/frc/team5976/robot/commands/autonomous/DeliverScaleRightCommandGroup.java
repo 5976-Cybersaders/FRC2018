@@ -7,6 +7,6 @@ import org.usfirst.frc.team5976.robot.subsystems.LiftSubsystem;
 
 public class DeliverScaleRightCommandGroup extends DeliverScaleCommandGroup {
     public DeliverScaleRightCommandGroup(DriveTrain driveTrain, GrabberSubsystem grabberSubsystem, LiftSubsystem liftSubsystem) {
-        super(1, driveTrain, grabberSubsystem, liftSubsystem);
+        super(-1, driveTrain, grabberSubsystem, liftSubsystem);
     }
 }

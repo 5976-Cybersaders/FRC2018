@@ -6,6 +6,6 @@ import org.usfirst.frc.team5976.robot.subsystems.GrabberSubsystem;
 
 public class DeliverSwitchRightCommandGroup extends DeliverSwitchCommandGroup {
     public DeliverSwitchRightCommandGroup(DriveTrain driveTrain, GrabberSubsystem grabberSubsystem) {
-        super(1, driveTrain, grabberSubsystem);
+        super(-1, driveTrain, grabberSubsystem);
     }
 }

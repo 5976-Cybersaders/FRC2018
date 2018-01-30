@@ -23,7 +23,8 @@ public class ReportHelper {
 				// Get the current difference between the setpoint and the sensor value.
 				"\tCLErr: " + clErr +
 
-				" Count: " + stableCount + " Avg Error: " + avgError + " Voltage: " + formatter.format(voltage));
+				" Count: " + stableCount + " Avg Error: " + avgError + " Voltage: " + formatter.format(voltage) +
+                " Percent Output: " + talon.getMotorOutputPercent());
 
 	}
 	// public static void reportExecute(WPI_TalonSRX talon, String side,
@@ -74,5 +75,11 @@ public class ReportHelper {
 			System.out.println("Closed Loop Error: " + talon.getClosedLoopError(0));
 		}
 		System.out.println();
+	}
+
+	public static void reportTeleOp(WPI_TalonSRX talon, String name) {
+		System.out.println(name +
+                " Voltage: " + formatter.format(talon.getMotorOutputVoltage()) +
+                "\tPercent Output: " + talon.getMotorOutputPercent());
 	}
 }
