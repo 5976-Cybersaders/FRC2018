@@ -20,6 +20,7 @@ public class SmartDashboardMap {
 	public static final SmartValue PEAK_VOLTAGE = new SmartValue("Peak Voltage", 0.5);
 	public static final SmartValue NOMINAL_VOLTAGE = new SmartValue("Nominal Voltage", 0.25);
 	public static final SmartValue RAMP_RATE = new SmartValue("Ramp Rate", 0);
+	public static final SmartValue SIDE_INVERSION = new SmartValue("Inverted Side", "RIGHT");
 	// public static final SmartValue RAMP_RATE_R = new SmartValue("Ramp Rate Right");
 
 	public static final SmartValue POSITION = new SmartValue("Position", "RIGHT");
@@ -42,6 +43,7 @@ public class SmartDashboardMap {
 		report(PEAK_VOLTAGE);
 		report(NOMINAL_VOLTAGE);
 		report(RAMP_RATE);
+		report(SIDE_INVERSION);
 		report(POSITION);
 		report(DELAY);
 	}

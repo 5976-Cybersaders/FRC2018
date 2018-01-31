@@ -10,8 +10,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class TeleOpTankDrive extends Command {
+	private DriveTrain driveTrain;
 	private WPI_TalonSRX leftMaster, leftSlave, rightMaster, rightSlave;
-	SpeedControllerGroup leftSide, rightSide;
+	private SpeedControllerGroup leftSide, rightSide;
 	private XboxController controller;
 	
 	private static double expoFactor = 0.2;
@@ -19,6 +20,7 @@ public class TeleOpTankDrive extends Command {
 	
 	public TeleOpTankDrive(XboxController controller, DriveTrain driveTrain) {
 		this.controller = controller;
+		this.driveTrain = driveTrain;
 		leftMaster = driveTrain.getLeftMaster();
 		leftSlave = driveTrain.getLeftSlave();
 		rightMaster = driveTrain.getRightMaster();
@@ -31,8 +33,7 @@ public class TeleOpTankDrive extends Command {
 	
 	@Override
 	protected void initialize() {
-		leftMaster.setInverted(true);
-		leftSlave.setInverted(true);
+		driveTrain.invertMotors();
 		initTalon(leftMaster);
 		initTalon(rightMaster);
 	}

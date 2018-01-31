@@ -42,8 +42,7 @@ public class EncoderTurnCommand extends AbstractEncoderDriveCommand {
 			System.out.println("Starting command drive turn angle " + angle + " ticks " + ticks);
 			leftMaster.setSelectedSensorPosition(0, 0, 0);
 			rightMaster.setSelectedSensorPosition(0, 0, 0);
-			leftMaster.setInverted(inversion);
-			leftSlave.setInverted(inversion);
+			driveTrain.invertMotors();
 			report(leftMaster, "Left Master");
 			report(rightMaster, "Right Master");
 			report(leftSlave, "Left Slave");

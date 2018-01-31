@@ -44,8 +44,7 @@ public class EncoderDriveStraightCommand extends AbstractEncoderDriveCommand {
 		leftMaster.setSelectedSensorPosition(0, 0, 0);
 		rightMaster.setSelectedSensorPosition(0, 0, 0);
 		
-		leftMaster.setInverted(inversion);
-		leftSlave.setInverted(inversion);
+		driveTrain.invertMotors();
 		
 		report(leftMaster, "Left Master");
 		report(rightMaster, "Right Master");
