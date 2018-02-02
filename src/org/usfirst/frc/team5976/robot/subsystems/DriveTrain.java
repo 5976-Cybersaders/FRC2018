@@ -1,6 +1,5 @@
 package org.usfirst.frc.team5976.robot.subsystems;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,6 +15,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveTrain extends Subsystem {
 	private WPI_TalonSRX leftMaster, leftSlave, rightMaster, rightSlave;
+	private List<WPI_TalonSRX> leftTalons;
+	private List<WPI_TalonSRX> rightTalons;
 	private PowerDistributionPanel pdp;
 	private OI oi;
 	
@@ -26,7 +27,8 @@ public class DriveTrain extends Subsystem {
 		leftSlave = new WPI_TalonSRX(RobotMap.LEFT_SLAVE);
 		rightMaster = new WPI_TalonSRX(RobotMap.RIGHT_MASTER);
 		rightSlave = new WPI_TalonSRX(RobotMap.RIGHT_SLAVE);
-
+		rightTalons = Arrays.asList(new WPI_TalonSRX[] {rightMaster, rightSlave});
+		leftTalons = Arrays.asList(new WPI_TalonSRX[] {leftMaster, leftSlave});
 		//pdp = new PowerDistributionPanel();
 		
 		this.oi = oi;
@@ -51,11 +53,13 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public void invertMotors() {
-		List<WPI_TalonSRX> talonsToInvert = Arrays.asList(new WPI_TalonSRX[] {rightMaster, rightSlave});
 		if (SmartDashboardMap.SIDE_INVERSION.getString().toUpperCase().equals("LEFT")) {
-			talonsToInvert = Arrays.asList(new WPI_TalonSRX[] {leftMaster, leftSlave});
+			leftTalons.forEach(talon -> talon.setInverted(true));
+			rightTalons.forEach(talon -> talon.setInverted(false));
+		} else {
+			rightTalons.forEach(talon -> talon.setInverted(true));
+			leftTalons.forEach(talon -> talon.setInverted(false));
 		}
-		talonsToInvert.forEach(talon -> talon.setInverted(true));
 	}
 	
 	public WPI_TalonSRX getLeftMaster() {

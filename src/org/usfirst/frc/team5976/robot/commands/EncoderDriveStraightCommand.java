@@ -11,66 +11,67 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class EncoderDriveStraightCommand extends AbstractEncoderDriveCommand {
 
-	private double inches;
-	private SmartValue smartValue = null;
+    private double inches;
+    private SmartValue smartValue = null;
 
-	public EncoderDriveStraightCommand(DriveTrain driveTrain, double inches) {
-		super(driveTrain);
-		System.out.println("Received inches: " + inches );
-		this.inches = inches;
-	}
+    public EncoderDriveStraightCommand(DriveTrain driveTrain, double inches) {
+        super(driveTrain);
+        System.out.println("Received inches: " + inches);
+        this.inches = inches;
+    }
 
-	public EncoderDriveStraightCommand(DriveTrain driveTrain, SmartValue smartValue) {
-		super(driveTrain);
-		this.smartValue = smartValue;
-	}
+    public EncoderDriveStraightCommand(DriveTrain driveTrain, SmartValue smartValue) {
+        super(driveTrain);
+        this.smartValue = smartValue;
+    }
 
-	protected void initialize() {
-		super.initialize();
+    protected void initialize() {
+        super.initialize();
 //		if (smartValue != null)
 //			inches = smartValue.getDouble();
-		ticks = toTicks(inches);
-		System.out.println("Using inches " + inches + " ticks ------>" + ticks);
-		allowableError = (int)SmartDashboardMap.ALLOWABLE_ERROR.getDouble();
-		if (ticks > 0) {
-			leftMaster.selectProfileSlot(0, 0);
-			rightMaster.selectProfileSlot(0, 0);
-		}
-		else {
-			leftMaster.selectProfileSlot(1, 0);
-			rightMaster.selectProfileSlot(1, 0);
-		}
-		System.out.println("Starting command drive straight inches " + inches + " Ticks " + ticks);
-		leftMaster.setSelectedSensorPosition(0, 0, 0);
-		rightMaster.setSelectedSensorPosition(0, 0, 0);
-		
-		driveTrain.invertMotors();
-		
-		report(leftMaster, "Left Master");
-		report(rightMaster, "Right Master");
-		report(leftSlave, "Left Slave");
-		report(rightSlave, "Right Slave");
+        ticks = toTicks(inches);
+        System.out.println("Using inches " + inches + " ticks ------>" + ticks);
+        allowableError = (int) SmartDashboardMap.ALLOWABLE_ERROR.getDouble();
+        if (ticks > 0) {
+            leftMaster.selectProfileSlot(0, 0);
+            rightMaster.selectProfileSlot(0, 0);
+        } else {
+            leftMaster.selectProfileSlot(1, 0);
+            rightMaster.selectProfileSlot(1, 0);
+        }
+        System.out.println("Starting command drive straight inches " + inches + " Ticks " + ticks);
+        leftMaster.setSelectedSensorPosition(0, 0, 0);
+        rightMaster.setSelectedSensorPosition(0, 0, 0);
 
-	}
+        driveTrain.invertMotors();
+        System.out.println("**********Right Master Inverted: " + rightMaster.getInverted());
+        System.out.println("**********Right Slave Inverted: " + rightSlave.getInverted());
 
-	protected void execute() {
-		SmartDashboard.putNumber("Left Revolutions", leftMaster.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Right Revolutions", rightMaster.getSelectedSensorPosition(0));
-		leftMaster.set(ControlMode.Position, ticks);
-		leftSlave.follow(leftMaster);
-		rightMaster.set(ControlMode.Position, ticks);
-		rightSlave.follow(rightMaster);
+        report(leftMaster, "Left Master");
+        report(rightMaster, "Right Master");
+        report(leftSlave, "Left Slave");
+        report(rightSlave, "Right Slave");
 
-		if (printCounter == printInterval) {
-			reportExecute(leftMaster, "Left Master", RobotMap.LEFT_MASTER_PDP);
-			// reportExecute(leftSlave, "Left Slave", RobotMap.LEFT_SLAVE_PDP);
-			reportExecute(rightMaster, "Right Master", RobotMap.RIGHT_MASTER_PDP);
-			// reportExecute(rightSlave, "Right Slave", RobotMap.RIGHT_SLAVE_PDP);
-			System.out.println();
-			printCounter = 0;
-		} else {
-			printCounter++;
-		}
+    }
 
-	}
+    protected void execute() {
+        SmartDashboard.putNumber("Left Revolutions", leftMaster.getSelectedSensorPosition(0));
+        SmartDashboard.putNumber("Right Revolutions", rightMaster.getSelectedSensorPosition(0));
+        leftMaster.set(ControlMode.Position, ticks);
+        leftSlave.follow(leftMaster);
+        rightMaster.set(ControlMode.Position, ticks);
+        rightSlave.follow(rightMaster);
+
+        if (printCounter == printInterval) {
+            reportExecute(leftMaster, "Left Master", RobotMap.LEFT_MASTER_PDP);
+            // reportExecute(leftSlave, "Left Slave", RobotMap.LEFT_SLAVE_PDP);
+            reportExecute(rightMaster, "Right Master", RobotMap.RIGHT_MASTER_PDP);
+            // reportExecute(rightSlave, "Right Slave", RobotMap.RIGHT_SLAVE_PDP);
+            System.out.println();
+            printCounter = 0;
+        } else {
+            printCounter++;
+        }
+
+    }
 }
