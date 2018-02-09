@@ -1,12 +1,13 @@
 package org.usfirst.frc.team5976.robot;
 
-import org.usfirst.frc.team5976.robot.commands.TeleOpMoveSolenoidCommand;
-import org.usfirst.frc.team5976.robot.commands.CompressorOnCommand;
+import edu.wpi.first.wpilibj.GenericHID;
+import org.usfirst.frc.team5976.robot.commands.*;
 import org.usfirst.frc.team5976.robot.subsystems.PneumaticsTester;
 import org.usfirst.frc.team5976.robot.XBoxButton;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.XboxController;
+import org.usfirst.frc.team5976.robot.subsystems.RampSubsystem;
 
 
 /**
@@ -41,25 +42,51 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
-	private XBoxButton solenoidForward, solenoidReverse, compressorOn;
-	
+	private XBoxButton solenoidForward, solenoidReverse, compressorOn, deployRamp, grab, release, climb;
+	private double raiseLift, lowerLift;
+
 	private final XboxController DRIVE_CONTROLLER = new XboxController(0);
+	private final XboxController SECONDARY_CONTROLLER = new XboxController(1);
 	
-	public OI(PneumaticsTester pneumatic){
-		solenoidForward = new XBoxButton(DRIVE_CONTROLLER, 5);
-		solenoidReverse = new XBoxButton(DRIVE_CONTROLLER, 6);
-		compressorOn = new XBoxButton(DRIVE_CONTROLLER, 4);
+	public OI(Robot robot){
+//		solenoidForward = new XBoxButton(DRIVE_CONTROLLER, 5);
+//		solenoidReverse = new XBoxButton(DRIVE_CONTROLLER, 6);
+//		compressorOn = new XBoxButton(DRIVE_CONTROLLER, 4);
+
+
+        grab = new XBoxButton(DRIVE_CONTROLLER, 4);
+        release = new XBoxButton(DRIVE_CONTROLLER, 2);
+        climb = new XBoxButton(DRIVE_CONTROLLER, 9);
+
+		deployRamp = new XBoxButton(SECONDARY_CONTROLLER, 3);
 		
-		solenoidForward.whenPressed(new TeleOpMoveSolenoidCommand(pneumatic, DoubleSolenoid.Value.kForward));
-		solenoidReverse.whenPressed(new TeleOpMoveSolenoidCommand(pneumatic, DoubleSolenoid.Value.kReverse));	
-		compressorOn.whenPressed(new CompressorOnCommand(pneumatic.getCompressor()));
+//		solenoidForward.whenPressed(new TeleOpMoveSolenoidCommand(robot.getPneumatic(), DoubleSolenoid.Value.kForward));
+//		solenoidReverse.whenPressed(new TeleOpMoveSolenoidCommand(robot.getPneumatic(), DoubleSolenoid.Value.kReverse));
+//		compressorOn.whenPressed(new CompressorOnCommand(robot.getPneumatic().getCompressor()));
+
+        grab.whileHeld(new GrabCubeCommand(robot.getGrabber()));
+        release.whileHeld(new ReleaseCubeCommand(robot.getGrabber()));
+
+        //compressorOn.whenPressed(new PrintCommand1(this));
+		//deployRamp.whenPressed(new DeployRampCommand(robot.getRampSubsystem()));
 	}
 	
 	public OI(){
 		
 	}
-	
+
+	public double getRaiseFactor(){
+	    return raiseLift;
+    }
+    public double getLowerFactor(){
+        return lowerLift;
+    }
+
 	public XboxController getDriveController() {
 		return DRIVE_CONTROLLER;
 	}
+
+	public XboxController getSecondaryController() { return DRIVE_CONTROLLER; }
+
+
 }

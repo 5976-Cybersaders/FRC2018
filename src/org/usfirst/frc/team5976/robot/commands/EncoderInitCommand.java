@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class EncoderInitCommand extends Command {
 	private WPI_TalonSRX leftMaster, rightMaster, leftSlave, rightSlave;
-	private boolean inversion = true;
 
 	public EncoderInitCommand(DriveTrain driveTrain) {
 		leftMaster = driveTrain.getLeftMaster();
@@ -23,8 +22,6 @@ public class EncoderInitCommand extends Command {
 
 	protected void initialize() {
 		initMaster(leftMaster, -1);
-		leftMaster.setInverted(inversion);
-		leftSlave.setInverted(inversion);
 		initMaster(rightMaster, 1);
 
 		report(leftMaster, "Left Master");

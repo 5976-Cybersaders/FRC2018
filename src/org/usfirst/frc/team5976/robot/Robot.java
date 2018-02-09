@@ -7,11 +7,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team5976.robot.commands.autonomous.TestCommandGroup;
-import org.usfirst.frc.team5976.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team5976.robot.subsystems.GrabberSubsystem;
-import org.usfirst.frc.team5976.robot.subsystems.LiftSubsystem;
-import org.usfirst.frc.team5976.robot.subsystems.PneumaticsTester;
+import org.usfirst.frc.team5976.robot.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,6 +23,7 @@ public class Robot extends IterativeRobot {
 	private PneumaticsTester pneumatic;
 	private LiftSubsystem lift;
 	private GrabberSubsystem grabber;
+	private RampSubsystem rampSubsystem;
 	
 
 	Command autonomousCommand;
@@ -40,9 +37,12 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		SmartDashboardMap.reportAll();
 		//oi = new OI(pneumatic);
-		oi = new OI();
+        rampSubsystem = new RampSubsystem();
+        grabber = new GrabberSubsystem();
+		oi = new OI(this);
 		lift = new LiftSubsystem();
-		grabber = new GrabberSubsystem();
+
+
 		driveTrain = new DriveTrain(oi);
 		//chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -145,4 +145,7 @@ public class Robot extends IterativeRobot {
 	public GrabberSubsystem getGrabber() {
 		return grabber;
 	}
+
+	public RampSubsystem getRampSubsystem() {
+		return rampSubsystem; }
 }

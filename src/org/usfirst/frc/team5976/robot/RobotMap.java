@@ -25,6 +25,20 @@ public class RobotMap {
 	public static final double PEAK_VOLTAGE_TELEOP = 6.0;
 	public static final int RAMP_RATE = 0;
 	public static final boolean BRAKE_MODE = false;
+
+	//Ramp subsystem
+	public static final int LEFT_RAMP_SERVO = 1;
+	public static final int RIGHT_RAMP_SERVO = 2;
+	
+	//Grabber subsystem
+	public static final int GEAR_RACK_SERVO = 9;
+	public static final int GEAR_RACK_EXTENSION_LIMIT_SWITCH = 7;
+	public static final int GEAR_RACK_RETRACTION_LIMIT_SWITCH = 7;
+	public static final int LINEAR_ACTUATOR_LEFT_SERVO = 4;
+    public static final int LINEAR_ACTUATOR_RIGHT_SERVO = 3;
+    public static final int LINEAR_ACTUATOR_LEFT_ANALOG_INPUT = 0;
+    public static final int LINEAR_ACTUATOR_RIGHT_ANALOG_INPUT = 1;
+
 	
 	public static final double TURN_DIAMETER = 23.5;
 }
