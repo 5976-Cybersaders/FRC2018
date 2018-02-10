@@ -9,23 +9,20 @@ package org.usfirst.frc.team5976.robot;
 public class RobotMap {
 	//DriveTrain Motors CAN IDs
 	//Master motors are the front motor
-	public static final int LEFT_MASTER = 2;
-	public static final int LEFT_SLAVE = 1;
-	public static final int RIGHT_MASTER = 4;
-	public static final int RIGHT_SLAVE = 3;
-	
-	//Talon Values
-	public static final double PEAK_VOLTAGE = 2.5;
-	public static final double PEAK_VOLTAGE_TELEOP = 6.0;
-	public static final int RAMP_RATE = 0;
-	public static final boolean BRAKE_MODE = false;
+	public static final int LEFT_MASTER_TALON_ID = 2;
+	public static final int LEFT_SLAVE_TALON_ID = 1;
+	public static final int RIGHT_MASTER_TALON_ID = 4;
+	public static final int RIGHT_SLAVE_TALON_ID = 3;
 
 	//Ramp subsystem
-	public static final int RAMP_SERVO = 1;
+	public static final int RAMP_SERVO_ID = 1;
+	
+	//Lift subsystem
+	public static final int LIFT_TALON_ID = 5;
 	
 	//Grabber subsystem
-	public static final int LINEAR_ACTUATOR_LEFT_SERVO = 9;
-    public static final int LINEAR_ACTUATOR_RIGHT_SERVO = 8;
+	public static final int GRABBER_LEFT_SERVO_ID = 9;
+    public static final int GRABBER_RIGHT_SERVO_ID = 8;
 
 	
 	public static final double TURN_DIAMETER = 23.5;

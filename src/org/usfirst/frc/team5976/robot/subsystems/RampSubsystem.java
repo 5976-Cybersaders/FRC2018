@@ -9,7 +9,7 @@ public class RampSubsystem extends Subsystem{
     private Servo servo;
 
     public RampSubsystem() {
-        servo = new Servo(RobotMap.RAMP_SERVO);
+        servo = new Servo(RobotMap.RAMP_SERVO_ID);
 
     }
 

@@ -9,8 +9,8 @@ public class GrabberSubsystem extends Subsystem {
 	private Servo leftServo, rightServo;
 
 	public GrabberSubsystem() {
-		leftServo = new Servo(RobotMap.LINEAR_ACTUATOR_LEFT_SERVO);
-        rightServo = new Servo(RobotMap.LINEAR_ACTUATOR_RIGHT_SERVO);
+		leftServo = new Servo(RobotMap.GRABBER_LEFT_SERVO_ID);
+        rightServo = new Servo(RobotMap.GRABBER_RIGHT_SERVO_ID);
 	}
 
 	@Override

@@ -15,9 +15,9 @@ import org.usfirst.frc.team5976.robot.subsystems.*;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	public OI oi;
+	private OI oi;
 	private DriveTrain driveTrain;
-	private LiftSubsystem lift;
+	private LiftSubsystem liftSubsystem;
 	private GrabberSubsystem grabber;
 	private RampSubsystem rampSubsystem;
 	private Command autonomousCommand;
@@ -31,9 +31,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboardMap.reportAll();
         rampSubsystem = new RampSubsystem();
         grabber = new GrabberSubsystem();
-		lift = new LiftSubsystem();
 		oi = new OI(this);
 		driveTrain = new DriveTrain(oi);
+		liftSubsystem = new LiftSubsystem(oi);
 	}
 
 	/**
@@ -85,6 +85,7 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		driveTrain.updateDefaultCommandForTeleOp();
+        liftSubsystem.initDefaultCommandForTeleOp();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
@@ -110,7 +111,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public LiftSubsystem getLiftSubsystem() {
-		return lift;
+		return liftSubsystem;
 	}
 
 	public GrabberSubsystem getGrabberSubsystem() {

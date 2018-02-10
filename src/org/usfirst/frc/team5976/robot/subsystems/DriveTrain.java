@@ -20,10 +20,10 @@ public class DriveTrain extends Subsystem {
 	public DriveTrain(OI oi) {
 		super();
 		System.out.println("START INIT DriveTrain");
-		leftMaster = new WPI_TalonSRX(RobotMap.LEFT_MASTER);
-		leftSlave = new WPI_TalonSRX(RobotMap.LEFT_SLAVE);
-		rightMaster = new WPI_TalonSRX(RobotMap.RIGHT_MASTER);
-		rightSlave = new WPI_TalonSRX(RobotMap.RIGHT_SLAVE);
+		leftMaster = new WPI_TalonSRX(RobotMap.LEFT_MASTER_TALON_ID);
+		leftSlave = new WPI_TalonSRX(RobotMap.LEFT_SLAVE_TALON_ID);
+		rightMaster = new WPI_TalonSRX(RobotMap.RIGHT_MASTER_TALON_ID);
+		rightSlave = new WPI_TalonSRX(RobotMap.RIGHT_SLAVE_TALON_ID);
 		
 		leftTalons = Arrays.asList(new WPI_TalonSRX[] {leftMaster, leftSlave});
 		rightTalons = Arrays.asList(new WPI_TalonSRX[] {rightMaster, rightSlave});

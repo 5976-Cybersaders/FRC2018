@@ -14,23 +14,35 @@ import org.usfirst.frc.team5976.robot.subsystems.LiftSubsystem;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class DeliverScaleCommandGroup extends CommandGroup {
+    private DriveTrain driveTrain;
+    private GrabberSubsystem grabberSubsystem;
+    private LiftSubsystem liftSubsystem;
+    private int side;
+
     public DeliverScaleCommandGroup(int side, Robot robot){
-    	DriveTrain driveTrain = robot.getDriveTrain();
-    	GrabberSubsystem grabberSubsystem = robot.getGrabberSubsystem();
-    	LiftSubsystem liftSubsystem = robot.getLiftSubsystem();
-    	
-    	addSequential(new AutonomousInitializationCommandGroup(robot));
-        addSequential(new DoNothingCommand(SmartDashboardMap.DELAY));
-        addSequential(new DriveAndRaise(driveTrain, liftSubsystem));
-        addSequential(new EncoderTurnCommand(driveTrain, 90 * side));
-        addSequential(new EncoderDriveStraightCommand(driveTrain, 5));
-        addSequential(new GrabberCommand(grabberSubsystem, 0, 1));
+        driveTrain = robot.getDriveTrain();
+        grabberSubsystem = robot.getGrabberSubsystem();
+        liftSubsystem = robot.getLiftSubsystem();
+        this.side = side;
+
+        addSequential(new AutonomousInitializationCommandGroup(robot));
+        addSequential(new CombinedCommandGroup());
     }
-    
-    class DriveAndRaise extends CommandGroup {
-        public DriveAndRaise(DriveTrain driveTrain, LiftSubsystem liftSubsystem) {
-            addParallel(new EncoderDriveStraightCommand(driveTrain, 300));
-            addParallel(new MoveLiftCommand(liftSubsystem));
+
+    class CombinedCommandGroup extends CommandGroup {
+        public CombinedCommandGroup() {
+            addParallel(new MoveLiftCommand(liftSubsystem, 60));
+            addParallel(new MainCommmandGroup());
+        }
+    }
+
+    class MainCommmandGroup extends CommandGroup {
+        public MainCommmandGroup() {
+            addSequential(new DoNothingCommand(SmartDashboardMap.DELAY));
+            addSequential(new EncoderDriveStraightCommand(driveTrain, 300));
+            addSequential(new EncoderTurnCommand(driveTrain, 90 * side));
+            addSequential(new EncoderDriveStraightCommand(driveTrain, 5));
+            addSequential(new GrabberCommand(grabberSubsystem, 0, 1));
         }
     }
 }
