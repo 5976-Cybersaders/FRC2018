@@ -13,7 +13,6 @@ public abstract class AbstractEncoderDriveCommand extends Command {
 	protected int stableCount;
 	protected int printCounter = 1, printInterval = 1;
 	private double previousError;
-	private long t0 = 0;
 	protected int allowableError = 100;
 	private double currentError;
 	
@@ -23,7 +22,6 @@ public abstract class AbstractEncoderDriveCommand extends Command {
 	// Wheel Values
 	private final int STABLE_COUNT_STOP = 20;
 	private final int DIAMETER = 6;
-	// private final double revsPerSecond = 1.6;
 
 	public AbstractEncoderDriveCommand(DriveTrain driveTrain) {
 		this.driveTrain = driveTrain;
@@ -47,16 +45,14 @@ public abstract class AbstractEncoderDriveCommand extends Command {
 		report(driveTrain.getLeftSlave(), "Left Slave");
 		report(driveTrain.getRightMaster(), "Right Master");
 		report(driveTrain.getRightSlave(), "Right Slave");
-
-		t0 = System.currentTimeMillis();
 	}
 
 	protected void report(WPI_TalonSRX talon, String name) {
 		ReportHelper.report(talon, this, name);
 	}
 
-	protected void reportExecute(WPI_TalonSRX talon, String side, int pdpPort) {
-		ReportHelper.reportExecute(talon, side, driveTrain.getPDP(), pdpPort, stableCount, currentError);
+	protected void reportExecute(WPI_TalonSRX talon, String side) {
+		ReportHelper.reportExecute(talon, side, stableCount, currentError);
 	}
 
 	protected double toTicks(double inches) {
@@ -73,7 +69,7 @@ public abstract class AbstractEncoderDriveCommand extends Command {
 			System.out.println("Crossed out of allowable error zone stable count: " + stableCount + " Previous: " + previousError + " current: " + currentError);
 		}
 		previousError = currentError;
-		if (currentError <= allowableError /*&& Math.abs(previousError - currentError) < allowableError*/) {
+		if (currentError <= allowableError) {
 			stableCount++;
 			if (stableCount >= STABLE_COUNT_STOP) {
 				System.out.println("Stopping. Stable count = " + stableCount + " Left: "
@@ -81,9 +77,6 @@ public abstract class AbstractEncoderDriveCommand extends Command {
 				return true;
 			}
 		} else {
-			// if (System.currentTimeMillis() - t0 >= getTimeOut()) {
-			// return true;
-			// }
 			stableCount = 0;
 		}
 		return false;
@@ -96,9 +89,4 @@ public abstract class AbstractEncoderDriveCommand extends Command {
 	protected void interrupted() {
 		end();
 	}
-	/*
-	 * protected double getTimeOut(){ double targetRevs =
-	 * (Math.abs(leftMaster.getSetpoint()) + Math.abs(rightMaster.getSetpoint()))/2;
-	 * return targetRevs*revsPerSecond*1000; }
-	 */
 }

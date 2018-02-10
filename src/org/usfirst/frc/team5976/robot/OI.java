@@ -1,13 +1,9 @@
 package org.usfirst.frc.team5976.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import org.usfirst.frc.team5976.robot.commands.*;
-import org.usfirst.frc.team5976.robot.subsystems.PneumaticsTester;
 import org.usfirst.frc.team5976.robot.XBoxButton;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.XboxController;
-import org.usfirst.frc.team5976.robot.subsystems.RampSubsystem;
 
 
 /**
@@ -42,45 +38,29 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
-	private XBoxButton solenoidForward, solenoidReverse, compressorOn, deployRamp, grab, release, climb;
-	private double raiseLift, lowerLift;
+	private XBoxButton deployRamp, grabFlat, grabVertical, release;
 
 	private final XboxController DRIVE_CONTROLLER = new XboxController(0);
 	private final XboxController SECONDARY_CONTROLLER = new XboxController(1);
 	
 	public OI(Robot robot){
-//		solenoidForward = new XBoxButton(DRIVE_CONTROLLER, 5);
-//		solenoidReverse = new XBoxButton(DRIVE_CONTROLLER, 6);
-//		compressorOn = new XBoxButton(DRIVE_CONTROLLER, 4);
+        grabFlat = new XBoxButton(DRIVE_CONTROLLER, XBoxButton.RawButton.LB);
+        grabVertical = new XBoxButton(DRIVE_CONTROLLER, XBoxButton.RawButton.RB);
+        release = new XBoxButton(DRIVE_CONTROLLER, XBoxButton.RawButton.A);
 
+		deployRamp = new XBoxButton(SECONDARY_CONTROLLER, XBoxButton.RawButton.X);
 
-        grab = new XBoxButton(DRIVE_CONTROLLER, 4);
-        release = new XBoxButton(DRIVE_CONTROLLER, 2);
-        climb = new XBoxButton(DRIVE_CONTROLLER, 9);
+        grabFlat.whileHeld(new GrabberCommand(robot.getGrabberSubsystem(), 1, DRIVE_CONTROLLER));
+        grabVertical.whileHeld(new GrabberCommand(robot.getGrabberSubsystem(), 2, DRIVE_CONTROLLER));
+        release.whileHeld(new GrabberCommand(robot.getGrabberSubsystem(), 0, DRIVE_CONTROLLER));
 
-		deployRamp = new XBoxButton(SECONDARY_CONTROLLER, 3);
-		
-//		solenoidForward.whenPressed(new TeleOpMoveSolenoidCommand(robot.getPneumatic(), DoubleSolenoid.Value.kForward));
-//		solenoidReverse.whenPressed(new TeleOpMoveSolenoidCommand(robot.getPneumatic(), DoubleSolenoid.Value.kReverse));
-//		compressorOn.whenPressed(new CompressorOnCommand(robot.getPneumatic().getCompressor()));
-
-        grab.whileHeld(new GrabCubeCommand(robot.getGrabber()));
-        release.whileHeld(new ReleaseCubeCommand(robot.getGrabber()));
-
-        //compressorOn.whenPressed(new PrintCommand1(this));
-		//deployRamp.whenPressed(new DeployRampCommand(robot.getRampSubsystem()));
+		deployRamp.whenPressed(new DeployRampCommand(robot.getRampSubsystem()));
 	}
 	
 	public OI(){
 		
 	}
 
-	public double getRaiseFactor(){
-	    return raiseLift;
-    }
-    public double getLowerFactor(){
-        return lowerLift;
-    }
 
 	public XboxController getDriveController() {
 		return DRIVE_CONTROLLER;

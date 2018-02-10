@@ -1,8 +1,6 @@
 package org.usfirst.frc.team5976.robot.commands;
 
-import org.usfirst.frc.team5976.robot.RobotMap;
 import org.usfirst.frc.team5976.robot.SmartDashboardMap;
-import org.usfirst.frc.team5976.robot.SmartValue;
 import org.usfirst.frc.team5976.robot.subsystems.DriveTrain;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -12,7 +10,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class EncoderDriveStraightCommand extends AbstractEncoderDriveCommand {
 
     private double inches;
-    private SmartValue smartValue = null;
 
     public EncoderDriveStraightCommand(DriveTrain driveTrain, double inches) {
         super(driveTrain);
@@ -20,15 +17,8 @@ public class EncoderDriveStraightCommand extends AbstractEncoderDriveCommand {
         this.inches = inches;
     }
 
-    public EncoderDriveStraightCommand(DriveTrain driveTrain, SmartValue smartValue) {
-        super(driveTrain);
-        this.smartValue = smartValue;
-    }
-
     protected void initialize() {
         super.initialize();
-//		if (smartValue != null)
-//			inches = smartValue.getDouble();
         ticks = toTicks(inches);
         System.out.println("Using inches " + inches + " ticks ------>" + ticks);
         allowableError = (int) SmartDashboardMap.ALLOWABLE_ERROR.getDouble();
@@ -44,8 +34,6 @@ public class EncoderDriveStraightCommand extends AbstractEncoderDriveCommand {
         rightMaster.setSelectedSensorPosition(0, 0, 0);
 
         driveTrain.invertMotors();
-        System.out.println("**********Right Master Inverted: " + rightMaster.getInverted());
-        System.out.println("**********Right Slave Inverted: " + rightSlave.getInverted());
 
         report(leftMaster, "Left Master");
         report(rightMaster, "Right Master");
@@ -63,10 +51,8 @@ public class EncoderDriveStraightCommand extends AbstractEncoderDriveCommand {
         rightSlave.follow(rightMaster);
 
         if (printCounter == printInterval) {
-            reportExecute(leftMaster, "Left Master", RobotMap.LEFT_MASTER_PDP);
-            // reportExecute(leftSlave, "Left Slave", RobotMap.LEFT_SLAVE_PDP);
-            reportExecute(rightMaster, "Right Master", RobotMap.RIGHT_MASTER_PDP);
-            // reportExecute(rightSlave, "Right Slave", RobotMap.RIGHT_SLAVE_PDP);
+            reportExecute(leftMaster, "Left Master");
+            reportExecute(rightMaster, "Right Master");
             System.out.println();
             printCounter = 0;
         } else {

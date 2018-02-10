@@ -62,10 +62,8 @@ public class EncoderTurnCommand extends AbstractEncoderDriveCommand {
 			rightSlave.follow(rightMaster);
 
 			if (printCounter == printInterval) {
-				reportExecute(leftMaster, "Left Master", RobotMap.LEFT_MASTER_PDP);
-				// reportExecute(leftSlave, "Left Slave", RobotMap.LEFT_SLAVE_PDP);
-				reportExecute(rightMaster, "Right Master", RobotMap.RIGHT_MASTER_PDP);
-				// reportExecute(rightSlave, "Right Slave", RobotMap.RIGHT_SLAVE_PDP);
+				reportExecute(leftMaster, "Left Master");
+				reportExecute(rightMaster, "Right Master");
 				System.out.println();
 				printCounter = 0;
 			} else {

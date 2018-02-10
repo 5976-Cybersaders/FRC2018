@@ -10,13 +10,11 @@ import org.usfirst.frc.team5976.robot.commands.TeleOpTankDrive;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveTrain extends Subsystem {
 	private WPI_TalonSRX leftMaster, leftSlave, rightMaster, rightSlave;
 	private List<WPI_TalonSRX> leftTalons, rightTalons;
-	private PowerDistributionPanel pdp;
 	private OI oi;
 	
 	public DriveTrain(OI oi) {
@@ -30,7 +28,6 @@ public class DriveTrain extends Subsystem {
 		leftTalons = Arrays.asList(new WPI_TalonSRX[] {leftMaster, leftSlave});
 		rightTalons = Arrays.asList(new WPI_TalonSRX[] {rightMaster, rightSlave});
 
-		//pdp = new PowerDistributionPanel();
 		
 		this.oi = oi;
 		System.out.println("END INIT DriveTrain");
@@ -83,10 +80,6 @@ public class DriveTrain extends Subsystem {
 
 	public WPI_TalonSRX getRightSlave() {
 		return rightSlave;
-	}
-	
-	public PowerDistributionPanel getPDP() {
-		return pdp;
 	}
 	
 	public OI getOI() {

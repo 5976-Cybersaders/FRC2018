@@ -6,24 +6,17 @@ import org.usfirst.frc.team5976.robot.commands.autonomous.DeliverScaleRightComma
 import org.usfirst.frc.team5976.robot.commands.autonomous.DeliverSwitchLeftCommandGroup;
 import org.usfirst.frc.team5976.robot.commands.autonomous.DeliverSwitchRightCommandGroup;
 import org.usfirst.frc.team5976.robot.commands.autonomous.TestCommandGroup;
-import org.usfirst.frc.team5976.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team5976.robot.subsystems.GrabberSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team5976.robot.subsystems.LiftSubsystem;
 
 public class GameData {
 	private String data;
 	private SmartValue position;
-	private DriveTrain driveTrain;
-	private GrabberSubsystem grabberSubsystem;
-	private LiftSubsystem liftSubsystem;
+	private Robot robot;
 
 	public GameData(Robot robot, String data) {
 		this.data = data;
-		driveTrain = robot.getDriveTrain();
-		grabberSubsystem = robot.getGrabber();
-		liftSubsystem = robot.getLift();
+		this.robot = robot;
 		position = SmartDashboardMap.POSITION;
 	}
 
@@ -43,14 +36,6 @@ public class GameData {
 		return !isScaleLeft();
 	}
 
-	public boolean isOpponentSwitchLeft() {
-		return data.charAt(2) == 'L';
-	}
-
-	private boolean isOpponentSwitchRight() {
-		return !isOpponentSwitchLeft();
-	}
-
 	public Command getCommand() {
 		Command command;
 		int position = getPosition();
@@ -66,10 +51,10 @@ public class GameData {
 				command = getCommandRight();
 				break;
 			case Positions.TEST:
-				command = new TestCommandGroup(driveTrain);
+				command = new TestCommandGroup(robot);
 				break;
 			default:
-				command = new CrossLineCommandGroup(driveTrain);
+				command = new CrossLineCommandGroup(robot);
 				break;
 		}
 		System.out.println("Running " + command.getClass().getSimpleName());
@@ -78,26 +63,26 @@ public class GameData {
 
 	private Command getCommandLeft() {
 		if(isAllianceSwitchLeft()){
-			return new DeliverSwitchLeftCommandGroup(driveTrain, grabberSubsystem);
+			return new DeliverSwitchLeftCommandGroup(robot);
 		}
 		if(isScaleLeft()){
-			return new DeliverScaleLeftCommandGroup(driveTrain, grabberSubsystem, liftSubsystem);
+			return new DeliverScaleLeftCommandGroup(robot);
 		}
-		return new CrossLineCommandGroup(driveTrain);
+		return new CrossLineCommandGroup(robot);
 	}
 
 	private Command getCommandMiddle() {
-		return new CrossLineCommandGroup(driveTrain);
+		return new CrossLineCommandGroup(robot);
 	}
 
 	private Command getCommandRight() {
 		if(isAllianceSwitchRight()){
-			return new DeliverSwitchRightCommandGroup(driveTrain, grabberSubsystem);
+			return new DeliverSwitchRightCommandGroup(robot);
 		}
 		if(isScaleRight()){
-			return new DeliverScaleRightCommandGroup(driveTrain, grabberSubsystem, liftSubsystem);
+			return new DeliverScaleRightCommandGroup(robot);
 		}
-		return new CrossLineCommandGroup(driveTrain);
+		return new CrossLineCommandGroup(robot);
 	}
 	
 	private int getPosition() {

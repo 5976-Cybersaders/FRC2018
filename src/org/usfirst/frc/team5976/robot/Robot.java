@@ -4,8 +4,6 @@ package org.usfirst.frc.team5976.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team5976.robot.subsystems.*;
 
@@ -17,17 +15,12 @@ import org.usfirst.frc.team5976.robot.subsystems.*;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
 	public OI oi;
 	private DriveTrain driveTrain;
-	private PneumaticsTester pneumatic;
 	private LiftSubsystem lift;
 	private GrabberSubsystem grabber;
 	private RampSubsystem rampSubsystem;
-	
-
-	Command autonomousCommand;
-	SendableChooser<Command> chooser = new SendableChooser<>();
+	private Command autonomousCommand;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -36,17 +29,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		SmartDashboardMap.reportAll();
-		//oi = new OI(pneumatic);
         rampSubsystem = new RampSubsystem();
         grabber = new GrabberSubsystem();
-		oi = new OI(this);
 		lift = new LiftSubsystem();
-
-
+		oi = new OI(this);
 		driveTrain = new DriveTrain(oi);
-		//chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", chooser);
 	}
 
 	/**
@@ -77,20 +64,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		//autonomousCommand = chooser.getSelected();
 		GameData gameData = GameDataAccess.getGameData(this);
 		autonomousCommand = gameData.getCommand();
-		//autonomousCommand = new TestCommandGroup(driveTrain);
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// schedule the autonomous command (example)
-		//autonomousCommand = new GearBoxRunCommand(driveTrain, 150000, 0.6);
-		//autonomousCommand = new TestCommandGroup();
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
@@ -134,15 +109,11 @@ public class Robot extends IterativeRobot {
 		return driveTrain;
 	}
 
-	public PneumaticsTester getPneumatic() {
-		return pneumatic;
-	}
-
-	public LiftSubsystem getLift() {
+	public LiftSubsystem getLiftSubsystem() {
 		return lift;
 	}
 
-	public GrabberSubsystem getGrabber() {
+	public GrabberSubsystem getGrabberSubsystem() {
 		return grabber;
 	}
 

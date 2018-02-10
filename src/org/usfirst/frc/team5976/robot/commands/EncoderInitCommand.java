@@ -21,9 +21,11 @@ public class EncoderInitCommand extends Command {
 	}
 
 	protected void initialize() {
+		System.out.println("BEGIN AUTONOMOUS ENCODER INIT");
 		initMaster(leftMaster, -1);
 		initMaster(rightMaster, 1);
 
+		SmartDashboardMap.reportAll();
 		report(leftMaster, "Left Master");
 		report(rightMaster, "Right Master");
 		report(leftSlave, "Left Slave");
@@ -35,53 +37,60 @@ public class EncoderInitCommand extends Command {
 	}
 
 	protected void initMaster(WPI_TalonSRX talon, int side) {
-		talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
-		talon.setSelectedSensorPosition(0, 0, 0);
-		talon.set(ControlMode.Position, 0);
+		int slotIndex = 1;
+		int stupidTimeOut = 0;
+		
+		talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, stupidTimeOut);
+		talon.setSelectedSensorPosition(0, 0, stupidTimeOut);
+		talon.set(ControlMode.Position, stupidTimeOut);
 		
 		double peakOutput = SmartDashboardMap.PEAK_VOLTAGE.getDouble();
 		double nominalOutput = SmartDashboardMap.NOMINAL_VOLTAGE.getDouble();
 		
-		talon.selectProfileSlot(1, 0);
-		talon.configPeakOutputForward(peakOutput, 0);
-		talon.configPeakOutputReverse(-peakOutput, 0);
-		talon.configNominalOutputForward(nominalOutput, 0);
-		talon.configNominalOutputReverse(-nominalOutput, 0);
-		talon.configClosedloopRamp(SmartDashboardMap.RAMP_RATE.getDouble(), 0);
+		talon.selectProfileSlot(slotIndex, stupidTimeOut);
+		talon.configAllowableClosedloopError(slotIndex, SmartDashboardMap.ALLOWABLE_ERROR.getIntValue(), stupidTimeOut);
+		talon.configPeakOutputForward(peakOutput, stupidTimeOut);
+		talon.configPeakOutputReverse(-peakOutput, stupidTimeOut);
+		talon.configNominalOutputForward(nominalOutput, stupidTimeOut);
+		talon.configNominalOutputReverse(-nominalOutput, stupidTimeOut);
+		talon.configClosedloopRamp(SmartDashboardMap.RAMP_RATE.getDouble(), stupidTimeOut);
 
 		if (side == -1){//Left
-			talon.config_kP(0, SmartDashboardMap.kPRL.getDouble(), 0);
-			talon.config_kI(0, SmartDashboardMap.kIRL.getDouble(), 0);
-			talon.config_kD(0, SmartDashboardMap.kDRL.getDouble(), 0);
+			System.out.println("INIT LEFT PIDs");
+			talon.config_kP(slotIndex, SmartDashboardMap.kPRL.getDouble(), stupidTimeOut);
+			talon.config_kI(slotIndex, SmartDashboardMap.kIRL.getDouble(), stupidTimeOut);
+			talon.config_kD(slotIndex, SmartDashboardMap.kDRL.getDouble(), stupidTimeOut);
 			
-			talon.selectProfileSlot(0, 0);
-			talon.config_kP(0, SmartDashboardMap.kPFL.getDouble(), 0);
-			talon.config_kI(0, SmartDashboardMap.kIFL.getDouble(), 0);
-			talon.config_kD(0, SmartDashboardMap.kDFL.getDouble(), 0);
+			slotIndex = 0;
+			talon.selectProfileSlot(slotIndex, stupidTimeOut);
+			talon.config_kP(slotIndex, SmartDashboardMap.kPFL.getDouble(), stupidTimeOut);
+			talon.config_kI(slotIndex, SmartDashboardMap.kIFL.getDouble(), stupidTimeOut);
+			talon.config_kD(slotIndex, SmartDashboardMap.kDFL.getDouble(), stupidTimeOut);
 
 		} else {
-			talon.config_kP(0, SmartDashboardMap.kPRR.getDouble(), 0);
-			talon.config_kI(0, SmartDashboardMap.kIRR.getDouble(), 0);
-			talon.config_kD(0, SmartDashboardMap.kDRR.getDouble(), 0);
-
-			talon.selectProfileSlot(0, 0);
-			talon.config_kP(0, SmartDashboardMap.kPFR.getDouble(), 0);
-			talon.config_kI(0, SmartDashboardMap.kIFR.getDouble(), 0);
-			talon.config_kD(0, SmartDashboardMap.kDFR.getDouble(), 0);
-
+			System.out.println("INIT RIGHT PIDs");
+			talon.config_kP(slotIndex, SmartDashboardMap.kPRR.getDouble(), stupidTimeOut);
+			talon.config_kI(slotIndex, SmartDashboardMap.kIRR.getDouble(), stupidTimeOut);
+			talon.config_kD(slotIndex, SmartDashboardMap.kDRR.getDouble(), stupidTimeOut);
+			
+			slotIndex = 0;
+			talon.selectProfileSlot(slotIndex, stupidTimeOut);
+			talon.config_kP(slotIndex, SmartDashboardMap.kPFR.getDouble(), stupidTimeOut);
+			talon.config_kI(slotIndex, SmartDashboardMap.kIFR.getDouble(), stupidTimeOut);
+			talon.config_kD(slotIndex, SmartDashboardMap.kDFR.getDouble(), stupidTimeOut);
 		}
 		
 		// Profile 0 For Both
-		talon.configPeakOutputForward(peakOutput, 0);
-		talon.configPeakOutputReverse(-peakOutput, 0);
+		talon.configPeakOutputForward(peakOutput, stupidTimeOut);
+		talon.configPeakOutputReverse(-peakOutput, stupidTimeOut);
 		System.out.println("PEAK OUTPUT ----------->" + peakOutput);
 		System.out.println("!!!!!!! NOMINAL ------------->" + nominalOutput);
 		System.out.println("Setting allowable error to " + SmartDashboardMap.ALLOWABLE_ERROR.getDouble());
-		talon.configAllowableClosedloopError(0, SmartDashboardMap.ALLOWABLE_ERROR.getIntValue(), 0);
-        talon.configClosedloopRamp(SmartDashboardMap.RAMP_RATE.getDouble(), 0);
+		talon.configAllowableClosedloopError(slotIndex, SmartDashboardMap.ALLOWABLE_ERROR.getIntValue(), stupidTimeOut);
+        talon.configClosedloopRamp(SmartDashboardMap.RAMP_RATE.getDouble(), stupidTimeOut);
 
-		talon.configNominalOutputForward(nominalOutput, 0);
-		talon.configNominalOutputReverse(-nominalOutput, 0);
+		talon.configNominalOutputForward(nominalOutput, stupidTimeOut);
+		talon.configNominalOutputReverse(-nominalOutput, stupidTimeOut);
 
 	}
 
