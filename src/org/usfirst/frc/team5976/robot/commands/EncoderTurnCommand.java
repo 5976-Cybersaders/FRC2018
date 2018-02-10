@@ -31,15 +31,15 @@ public class EncoderTurnCommand extends AbstractEncoderDriveCommand {
 				angle = smartValue.getDouble();
 			ticks = toTicks(angle);
 			allowableError = (int)SmartDashboardMap.ALLOWABLE_ERROR.getDouble();
+			int leftSlot = 1, rightSlot = 0;
 			if (ticks > 0) {//Right Turn
-				leftMaster.selectProfileSlot(0, 0);
-				rightMaster.selectProfileSlot(1, 0);
+				leftSlot = 0;
+				rightSlot = 1;
 			}
-			else {
-				leftMaster.selectProfileSlot(1, 0);
-				rightMaster.selectProfileSlot(0, 0);
-			}
-			System.out.println("Starting command drive turn angle " + angle + " ticks " + ticks);
+			leftMaster.selectProfileSlot(leftSlot, 0);
+			rightMaster.selectProfileSlot(rightSlot, 0);
+			
+			System.out.println("Starting command drive turn angle " + angle + " ticks " + ticks + " Left=" + leftSlot + " Right=" + rightSlot);
 			leftMaster.setSelectedSensorPosition(0, 0, 0);
 			rightMaster.setSelectedSensorPosition(0, 0, 0);
 
