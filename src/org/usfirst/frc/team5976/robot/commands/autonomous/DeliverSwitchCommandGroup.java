@@ -9,6 +9,8 @@ import org.usfirst.frc.team5976.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5976.robot.subsystems.GrabberSubsystem;
 import org.usfirst.frc.team5976.robot.subsystems.LiftSubsystem;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class DeliverSwitchCommandGroup extends CommandGroup {
     private DriveTrain driveTrain;
     private GrabberSubsystem grabberSubsystem;
@@ -27,16 +29,18 @@ public class DeliverSwitchCommandGroup extends CommandGroup {
 
     class CombinedCommandGroup extends CommandGroup {
         public CombinedCommandGroup() {
-            addParallel(new MoveLiftCommand(liftSubsystem, 30));
-            addParallel(new MainCommandGroup());
+            AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+            addParallel(new MoveLiftCommand(liftSubsystem, 30, atomicBoolean));
+            addParallel(new MainCommandGroup(atomicBoolean));
         }
     }
 
     class MainCommandGroup extends CommandGroup {
-        public MainCommandGroup() {
+        public MainCommandGroup(AtomicBoolean atomicBoolean) {
             addSequential(new DoNothingCommand(SmartDashboardMap.DELAY));
             addSequential(new EncoderDriveStraightCommand(driveTrain, 140));
             addSequential(new EncoderTurnCommand(driveTrain, 90 * side));
+            addSequential(new WaitForCompletionCommand(atomicBoolean));
             addSequential(new GrabberCommand(grabberSubsystem, 0, 1));
         }
     }

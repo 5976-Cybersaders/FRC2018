@@ -12,7 +12,8 @@ public class LiftSubsystem extends Subsystem {
 
 	public LiftSubsystem(OI oi){
 		this.oi = oi;
-	    this.talon = new WPI_TalonSRX(RobotMap.LIFT_TALON_ID);
+		//TODO: uncomment when actual talon is in
+	    //this.talon = new WPI_TalonSRX(RobotMap.LIFT_TALON_ID);
 	}
 
     @Override
