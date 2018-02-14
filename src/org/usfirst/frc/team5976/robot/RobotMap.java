@@ -21,8 +21,7 @@ public class RobotMap {
 	public static final int LIFT_TALON_ID = 5;
 	
 	//Grabber subsystem
-	public static final int GRABBER_LEFT_SERVO_ID = 9;
-    public static final int GRABBER_RIGHT_SERVO_ID = 8;
+	public static final int GRABBER_SERVO = 9;
 
 	
 	public static final double TURN_DIAMETER = 23.5;

@@ -11,13 +11,11 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class GameData {
 	private String data;
-	private SmartValue position;
 	private Robot robot;
 
 	public GameData(Robot robot, String data) {
 		this.data = data;
 		this.robot = robot;
-		position = SmartDashboardMap.POSITION;
 	}
 
 	private boolean isAllianceSwitchLeft() {
@@ -38,19 +36,19 @@ public class GameData {
 
 	public Command getCommand() {
 		Command command;
-		int position = getPosition();
+		int position = Position.getPosition().getIntPosition();
 		System.out.println("Position Value:" + position);
 		switch (position) {
-			case Positions.LEFT:
+			case Position.LEFT:
 				command = getCommandLeft();
 				break;
-			case Positions.MIDDLE:
+			case Position.MIDDLE:
 				command = getCommandMiddle();
 				break;
-			case Positions.RIGHT:
+			case Position.RIGHT:
 				command = getCommandRight();
 				break;
-			case Positions.TEST:
+			case Position.TEST:
 				command = new TestCommandGroup(robot);
 				break;
 			default:
@@ -83,20 +81,5 @@ public class GameData {
 			return new DeliverScaleRightCommandGroup(robot);
 		}
 		return new CrossLineCommandGroup(robot);
-	}
-	
-	private int getPosition() {
-		String stringPosition = position.getString().trim().toUpperCase();
-		if (stringPosition.equals("LEFT") || stringPosition.equals("" + Positions.LEFT)) return Positions.LEFT;
-		if (stringPosition.equals("RIGHT") || stringPosition.equals("" + Positions.RIGHT)) return Positions.RIGHT;
-		if (stringPosition.equals("TEST") || stringPosition.equals("" + Positions.TEST)) return Positions.TEST;
-		return Positions.MIDDLE;
-	}
-	
-	private static class Positions {
-		static final int LEFT = -1;
-		static final int MIDDLE = 0;
-		static final int RIGHT = 1;
-		static final int TEST = 3;
 	}
 }

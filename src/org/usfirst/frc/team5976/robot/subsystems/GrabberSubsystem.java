@@ -6,11 +6,11 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class GrabberSubsystem extends Subsystem {
-	private Servo leftServo, rightServo;
+	private Servo servo, servo2;
 
 	public GrabberSubsystem() {
-		leftServo = new Servo(RobotMap.GRABBER_LEFT_SERVO_ID);
-        rightServo = new Servo(RobotMap.GRABBER_RIGHT_SERVO_ID);
+		servo = new Servo(RobotMap.GRABBER_SERVO);
+		servo2 = new Servo(8);
 	}
 
 	@Override
@@ -18,13 +18,11 @@ public class GrabberSubsystem extends Subsystem {
 		
 	}
 
-	public Servo getLeftServo() {
-		return leftServo;
-	}
-
-	public Servo getRightServo() {
-		return rightServo;
+	public Servo getServo() {
+		return servo;
 	}
 	
-	
+	public Servo getServo2() {
+		return servo2;
+	}
 }

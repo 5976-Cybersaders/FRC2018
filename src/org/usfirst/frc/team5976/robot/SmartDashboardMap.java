@@ -37,8 +37,8 @@ public class SmartDashboardMap {
 	public static final SmartValue DELAY = makeValue("Delay (Seconds)", 0);
 
 	//Grabber Values
-	public static final SmartValue GRABBER_POSITION_1 = makeValue("Grab Position 1", .45);
-    public static final SmartValue GRABBER_POSITION_2 = makeValue("Grab Position 2", .65);
+	public static final SmartValue GRABBER_POSITION_1 = makeValue("Grab Position 1", .35);
+    public static final SmartValue GRABBER_POSITION_2 = makeValue("Grab Position 2", .4);
     public static final SmartValue GRABBER_RANGE = makeValue("Grab Range", .1);
 	
 	public static void reportAll() {

@@ -18,6 +18,7 @@ public class TeleOpLiftCommand extends Command {
     public TeleOpLiftCommand(XboxController xboxController, LiftSubsystem liftSubsystem) {
         this.xboxController = xboxController;
         talon = liftSubsystem.getLiftTalon();
+        requires(liftSubsystem);
     }
 
     @Override

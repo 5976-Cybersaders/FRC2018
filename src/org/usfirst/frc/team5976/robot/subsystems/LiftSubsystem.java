@@ -22,7 +22,7 @@ public class LiftSubsystem extends Subsystem {
     }
 
     public void initDefaultCommandForTeleOp() {
-	    setDefaultCommand(new TeleOpLiftCommand(oi.getSecondaryController(), this));
+	    //setDefaultCommand(new TeleOpLiftCommand(oi.getSecondaryController(), this));
     }
 
     public WPI_TalonSRX getLiftTalon() {

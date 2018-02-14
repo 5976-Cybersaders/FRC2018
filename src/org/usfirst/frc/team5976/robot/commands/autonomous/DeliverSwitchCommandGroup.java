@@ -2,6 +2,7 @@ package org.usfirst.frc.team5976.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+import org.usfirst.frc.team5976.robot.Position;
 import org.usfirst.frc.team5976.robot.Robot;
 import org.usfirst.frc.team5976.robot.SmartDashboardMap;
 import org.usfirst.frc.team5976.robot.commands.*;
@@ -15,16 +16,21 @@ public class DeliverSwitchCommandGroup extends CommandGroup {
     private DriveTrain driveTrain;
     private GrabberSubsystem grabberSubsystem;
     private LiftSubsystem liftSubsystem;
-    private int side;
+    private int position;
 
-    public DeliverSwitchCommandGroup(int side, Robot robot){
+    public DeliverSwitchCommandGroup(Position position, Robot robot){
     	driveTrain = robot.getDriveTrain();
     	grabberSubsystem = robot.getGrabberSubsystem();
     	liftSubsystem = robot.getLiftSubsystem();
-    	this.side = side;
+    	this.position = position.getIntPosition();
     	
         addSequential(new AutonomousInitializationCommandGroup(robot));
         addSequential(new CombinedCommandGroup());
+        addSequential(new PostReleaseCommandGroup());
+        addSequential(new EncoderTurnCommand(driveTrain, -90 * this.position));
+        addSequential(new EncoderDriveStraightCommand(driveTrain, 15));
+        addSequential(new EncoderTurnCommand(driveTrain, 90 * this.position));
+        addSequential(new EncoderDriveStraightCommand(driveTrain, 15));
     }
 
     class CombinedCommandGroup extends CommandGroup {
@@ -38,10 +44,18 @@ public class DeliverSwitchCommandGroup extends CommandGroup {
     class MainCommandGroup extends CommandGroup {
         public MainCommandGroup(AtomicBoolean atomicBoolean) {
             addSequential(new DoNothingCommand(SmartDashboardMap.DELAY));
-            addSequential(new EncoderDriveStraightCommand(driveTrain, 140));
-            addSequential(new EncoderTurnCommand(driveTrain, 90 * side));
+            addSequential(new EncoderDriveStraightCommand(driveTrain, 129));
+            addSequential(new EncoderTurnCommand(driveTrain, -90 * position));
             addSequential(new WaitForCompletionCommand(atomicBoolean));
+            addSequential(new EncoderDriveStraightCommand(driveTrain, 5));
             addSequential(new GrabberCommand(grabberSubsystem, 0, 1));
         }
+    }
+    
+    class PostReleaseCommandGroup extends CommandGroup {
+    	public PostReleaseCommandGroup() {
+    		addParallel(new EncoderDriveStraightCommand(driveTrain, -5));
+    		addParallel(new MoveLiftCommand(liftSubsystem, 0, new AtomicBoolean(false)));
+    	}
     }
 }

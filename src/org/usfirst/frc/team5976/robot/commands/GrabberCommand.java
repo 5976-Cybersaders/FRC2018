@@ -10,14 +10,14 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class GrabberCommand extends Command {
     private int counter = 0, printInterval = 10;
-    private Servo leftServo, rightServo;
+    private Servo servo, servo2;
     private int action;
     private double timeOutSeconds = -1;
     private XboxController xboxController;
 	
 	public GrabberCommand(GrabberSubsystem grabber, int action, XboxController xboxController) {
-		leftServo = grabber.getLeftServo();
-        rightServo = grabber.getRightServo();
+		servo = grabber.getServo();
+		servo2 = grabber.getServo2();
         this.action = action;
         this.xboxController = xboxController;
 		requires(grabber);
@@ -38,8 +38,8 @@ public class GrabberCommand extends Command {
 	@Override
     protected void execute() {
 	    double setPoint = getSetPoint();
-	    leftServo.setPosition(setPoint);
-        rightServo.setPosition(setPoint);
+	    servo.setPosition(setPoint);
+	    servo2.setPosition(setPoint);
 	    
 	    if (counter++ % printInterval == 0) {
             System.out.println("Running " + getClass().getSimpleName() + " with action # " + action + " and set point " + setPoint);
