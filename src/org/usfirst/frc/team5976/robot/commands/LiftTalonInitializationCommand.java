@@ -1,13 +1,39 @@
 package org.usfirst.frc.team5976.robot.commands;
 
+import org.usfirst.frc.team5976.robot.SmartDashboardMap;
+import org.usfirst.frc.team5976.robot.subsystems.LiftSubsystem;
+
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import org.usfirst.frc.team5976.robot.SmartDashboardMap;
 
-public class LiftTalonInitialization {
-    public static void init(WPI_TalonSRX talon) {
+import edu.wpi.first.wpilibj.command.Command;
+
+public class LiftTalonInitializationCommand extends Command {
+	private static boolean isInitialized = false;
+	private WPI_TalonSRX talon;
+	
+	public LiftTalonInitializationCommand(LiftSubsystem liftSubsystem) {
+		talon = liftSubsystem.getLiftTalon();
+		requires(liftSubsystem);
+	}
+	
+	
+	@Override
+	public void initialize() {
+		isInitialized = false;
+		initTalon(talon);
+	}
+	
+	public static void initTalon(WPI_TalonSRX talon) {
+		if (isInitialized) return;
+    	isInitialized = true;
+    	
+    	if (talon == null) return;
+    	
         talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
         talon.setSelectedSensorPosition(0, 0, 0);
+        talon.setSensorPhase(true);
+        talon.setInverted(true);
 
         talon.config_kP(0, SmartDashboardMap.LIFT_kP.getDouble(), 0);
         talon.config_kI(0, SmartDashboardMap.LIFT_kI.getDouble(), 0);
@@ -17,6 +43,11 @@ public class LiftTalonInitialization {
         talon.configPeakOutputReverse(-SmartDashboardMap.LIFT_PEAK_VOLTAGE.getDouble(), 0);
         talon.configNominalOutputForward(SmartDashboardMap.LIFT_NOMINAL_VOLTAGE.getDouble(), 0);
         talon.configNominalOutputReverse(-SmartDashboardMap.LIFT_NOMINAL_VOLTAGE.getDouble(), 0);
-    }
+	}
+
+	@Override
+	protected boolean isFinished() {
+		return true;
+	}
 
 }

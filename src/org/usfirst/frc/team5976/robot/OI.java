@@ -55,6 +55,7 @@ public class OI {
         release.whileHeld(new GrabberCommand(robot.getGrabberSubsystem(), 0, DRIVE_CONTROLLER));
 
 		deployRamp.whenPressed(new DeployRampCommand(robot.getRampSubsystem()));
+		
 	}
 	
 	public OI(){
@@ -66,7 +67,7 @@ public class OI {
 		return DRIVE_CONTROLLER;
 	}
 
-	public XboxController getSecondaryController() { return DRIVE_CONTROLLER; }
+	public XboxController getSecondaryController() { return SECONDARY_CONTROLLER; }
 
 
 }

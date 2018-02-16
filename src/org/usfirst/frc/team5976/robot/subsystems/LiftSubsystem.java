@@ -12,8 +12,7 @@ public class LiftSubsystem extends Subsystem {
 
 	public LiftSubsystem(OI oi){
 		this.oi = oi;
-		//TODO: uncomment when actual talon is in
-	    //this.talon = new WPI_TalonSRX(RobotMap.LIFT_TALON_ID);
+	    this.talon = new WPI_TalonSRX(RobotMap.LIFT_TALON_ID);
 	}
 
     @Override
@@ -22,7 +21,7 @@ public class LiftSubsystem extends Subsystem {
     }
 
     public void initDefaultCommandForTeleOp() {
-	    //setDefaultCommand(new TeleOpLiftCommand(oi.getSecondaryController(), this));
+	    setDefaultCommand(new TeleOpLiftCommand(this, oi.getSecondaryController()));
     }
 
     public WPI_TalonSRX getLiftTalon() {

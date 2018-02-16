@@ -61,7 +61,7 @@ public class DeliverScaleCommandGroup extends CommandGroup {
     class PostReleaseCommandGroup extends CommandGroup {
     	public PostReleaseCommandGroup() {
     		addParallel(new EncoderDriveStraightCommand(driveTrain, -5));
-    		addParallel(new MoveLiftCommand(liftSubsystem, 0, new AtomicBoolean(false)));
+    		addParallel(new MoveLiftCommand(liftSubsystem, 0));
     	}
     }
 }

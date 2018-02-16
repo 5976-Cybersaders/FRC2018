@@ -13,33 +13,38 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MoveLiftCommand extends Command {
 	private WPI_TalonSRX talon;
 	private double setPoint;
-	private AtomicBoolean atomicBoolean;
+	private AtomicBoolean isAtSetPoint;
 	private int counter = 0;
 
-	public MoveLiftCommand(LiftSubsystem liftSubsystem, double distanceToMove, AtomicBoolean atomicBoolean) {
+	public MoveLiftCommand(LiftSubsystem liftSubsystem, double distanceToMove, AtomicBoolean isAtSetPoint) {
 		talon = liftSubsystem.getLiftTalon();
 		setPoint = toTicks(distanceToMove);
-		this.atomicBoolean = atomicBoolean;
+		this.isAtSetPoint = isAtSetPoint;
+		requires(liftSubsystem);
+	}
+	
+	public MoveLiftCommand(LiftSubsystem liftSubsystem, int setPoint) {
+		talon = liftSubsystem.getLiftTalon();
+		this.setPoint = setPoint;
+		this.isAtSetPoint = new AtomicBoolean(false);
 		requires(liftSubsystem);
 	}
 
 	@Override
     protected void initialize() {
 	    counter = 0;
-	    atomicBoolean.set(false);
-	    //TODO: uncomment when actual talon is in
-		//LiftTalonInitialization.init(talon);
+	    isAtSetPoint.set(false);
 		System.out.println("Start " + getClass().getSimpleName() + " with set point: " + setPoint);
     }
 
     @Override
 	protected void execute() {
-//		talon.set(ControlMode.Position, setPoint);
+// 		  talon.set(ControlMode.Position, setPoint);
 //        counter++;
 //        if (counter > 50 && Math.abs(talon.getSelectedSensorPosition(0) - setPoint) < SmartDashboardMap.LIFT_ALLOWABLE_ERROR.getDouble()){
 //            atomicBoolean.set(true);
 //        }
-        if (counter++ > 200) atomicBoolean.set(true);
+        if (counter++ > 200) isAtSetPoint.set(true);
 	}
 
 	@Override

@@ -17,6 +17,7 @@ public class DeliverSwitchCommandGroup extends CommandGroup {
     private GrabberSubsystem grabberSubsystem;
     private LiftSubsystem liftSubsystem;
     private int position;
+    private double inchesToLiftToScale = 30;
 
     public DeliverSwitchCommandGroup(Position position, Robot robot){
     	driveTrain = robot.getDriveTrain();
@@ -35,18 +36,18 @@ public class DeliverSwitchCommandGroup extends CommandGroup {
 
     class CombinedCommandGroup extends CommandGroup {
         public CombinedCommandGroup() {
-            AtomicBoolean atomicBoolean = new AtomicBoolean(false);
-            addParallel(new MoveLiftCommand(liftSubsystem, 30, atomicBoolean));
-            addParallel(new MainCommandGroup(atomicBoolean));
+            AtomicBoolean isAtLiftSetPoint = new AtomicBoolean(false);
+            addParallel(new MoveLiftCommand(liftSubsystem, inchesToLiftToScale, isAtLiftSetPoint));
+            addParallel(new MainCommandGroup(isAtLiftSetPoint));
         }
     }
 
     class MainCommandGroup extends CommandGroup {
-        public MainCommandGroup(AtomicBoolean atomicBoolean) {
+        public MainCommandGroup(AtomicBoolean isAtLiftSetPoint) {
             addSequential(new DoNothingCommand(SmartDashboardMap.DELAY));
             addSequential(new EncoderDriveStraightCommand(driveTrain, 129));
             addSequential(new EncoderTurnCommand(driveTrain, -90 * position));
-            addSequential(new WaitForCompletionCommand(atomicBoolean));
+            addSequential(new WaitForCompletionCommand(isAtLiftSetPoint));
             addSequential(new EncoderDriveStraightCommand(driveTrain, 5));
             addSequential(new GrabberCommand(grabberSubsystem, 0, 1));
         }
@@ -55,7 +56,7 @@ public class DeliverSwitchCommandGroup extends CommandGroup {
     class PostReleaseCommandGroup extends CommandGroup {
     	public PostReleaseCommandGroup() {
     		addParallel(new EncoderDriveStraightCommand(driveTrain, -5));
-    		addParallel(new MoveLiftCommand(liftSubsystem, 0, new AtomicBoolean(false)));
+    		addParallel(new MoveLiftCommand(liftSubsystem, 0));
     	}
     }
 }
