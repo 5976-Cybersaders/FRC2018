@@ -48,7 +48,7 @@ public class OI {
         grabVertical = new XBoxButton(DRIVE_CONTROLLER, XBoxButton.RawButton.RB);
         release = new XBoxButton(DRIVE_CONTROLLER, XBoxButton.RawButton.A);
 
-		deployRamp = new XBoxButton(SECONDARY_CONTROLLER, XBoxButton.RawButton.X);
+		deployRamp = new XBoxButton(SECONDARY_CONTROLLER, XBoxButton.RawButton.LB);
 
         grabFlat.whileHeld(new GrabberCommand(robot.getGrabberSubsystem(), 1, DRIVE_CONTROLLER));
         grabVertical.whileHeld(new GrabberCommand(robot.getGrabberSubsystem(), 2, DRIVE_CONTROLLER));

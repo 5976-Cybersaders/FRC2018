@@ -30,9 +30,6 @@ public class TeleOpLiftCommand extends Command {
 
 	@Override
 	protected void execute() {
-		if (talon == null)
-			return;
-
 		// negative is intentional
 		double input = -xboxController.getY(GenericHID.Hand.kLeft);
 		System.out.println("Lift sensor position: " + talon.getSelectedSensorPosition(0));
@@ -44,7 +41,6 @@ public class TeleOpLiftCommand extends Command {
 
 	// @Override
 	// protected void execute() {
-	// if (talon == null)
 	// return;
 	//
 	// double input = -xboxController.getY(GenericHID.Hand.kLeft);
@@ -63,6 +59,7 @@ public class TeleOpLiftCommand extends Command {
 	
 	protected double getInput() {
 		double input = -xboxController.getY(GenericHID.Hand.kLeft);
+		if (xboxController.getBumperPressed(Hand.kRight)) return input;
 		if (isOperatorControl(input)) {
 			double encoderPosition = talon.getSelectedSensorPosition(0);
 			boolean maxTest = encoderPosition >= maxEncoderPosition && input > 0;

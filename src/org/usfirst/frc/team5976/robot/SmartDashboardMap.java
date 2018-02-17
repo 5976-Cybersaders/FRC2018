@@ -7,16 +7,16 @@ public class SmartDashboardMap {
 	private static final Vector<SmartValue> all = new Vector<>();
 	public static final SmartValue kPFL = makeValue("P-Value FL", 0.04);
 	public static final SmartValue kIFL = makeValue("I-Value FL", 0);
-	public static final SmartValue kDFL = makeValue("D-Value FL", 0);
+	public static final SmartValue kDFL = makeValue("D-Value FL", 0.4);
 	public static final SmartValue kPFR = makeValue("P-Value FR", 0.04);
 	public static final SmartValue kIFR = makeValue("I-Value FR", 0);
-	public static final SmartValue kDFR = makeValue("D-Value FR", 0);
+	public static final SmartValue kDFR = makeValue("D-Value FR", 0.4);
 	public static final SmartValue kPRL = makeValue("P-Value RevL", 0.04);
 	public static final SmartValue kIRL = makeValue("I-Value RevL", 0);
-	public static final SmartValue kDRL = makeValue("D-Value RevL", 0);
+	public static final SmartValue kDRL = makeValue("D-Value RevL", 0.4);
 	public static final SmartValue kPRR = makeValue("P-Value RevR", 0.04);
 	public static final SmartValue kIRR = makeValue("I-Value RevR", 0);
-	public static final SmartValue kDRR = makeValue("D-Value RevR", 0);
+	public static final SmartValue kDRR = makeValue("D-Value RevR", 0.4);
 	public static final SmartValue ALLOWABLE_ERROR = makeValue("Allowable Error", 100);
 	
 	// Drive Talons
@@ -31,7 +31,7 @@ public class SmartDashboardMap {
 	public static final SmartValue LIFT_kD = makeValue("D-Value Lift", 0);
 	public static final SmartValue LIFT_ALLOWABLE_ERROR = makeValue("Lift Allowable Error", 100);
 	public static final SmartValue LIFT_PEAK_VOLTAGE = makeValue("Lift Peak Voltage", 0.5);
-	public static final SmartValue LIFT_NOMINAL_VOLTAGE = makeValue("Lift Nominal Voltage", 0.15);
+	public static final SmartValue LIFT_NOMINAL_VOLTAGE = makeValue("Lift Nominal Voltage", 0.6);
 
 	public static final SmartValue POSITION = makeValue("Position", "RIGHT");
 	public static final SmartValue DELAY = makeValue("Delay (Seconds)", 0);
