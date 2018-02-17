@@ -43,7 +43,6 @@ public class DeliverScaleCommandGroup extends CommandGroup {
             addSequential(new EncoderDriveStraightCommand(driveTrain, 5));
             addSequential(new WaitForLiftRaised());
             addSequential(new ReleaseCubeCommand(grabberSubsystem, 1));
-            addSequential(new EncoderDriveStraightCommand(driveTrain, 5));
         }
     }
     
@@ -51,9 +50,9 @@ public class DeliverScaleCommandGroup extends CommandGroup {
     	public PostReleaseCommandGroup() {
     		addSequential(new EncoderDriveStraightCommand(driveTrain, -5));
             addSequential(new EncoderTurnCommand(driveTrain, -90 * position));
-            addSequential(new EncoderDriveStraightCommand(driveTrain, 30));
+            addSequential(new EncoderDriveStraightCommand(driveTrain, 100));
             addSequential(new EncoderTurnCommand(driveTrain, 90 * position));
-            addSequential(new EncoderDriveStraightCommand(driveTrain, 15));
+            addSequential(new EncoderDriveStraightCommand(driveTrain, 50));
     	}
     }
 

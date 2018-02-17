@@ -24,5 +24,5 @@ public class RobotMap {
 	public static final int GRABBER_SERVO = 9;
 
 	
-	public static final double TURN_DIAMETER = 49; //23.5
+	public static final double TURN_DIAMETER = 23.5; //23.5 || 49
 }
