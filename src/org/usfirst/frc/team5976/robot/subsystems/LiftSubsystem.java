@@ -8,12 +8,12 @@ import org.usfirst.frc.team5976.robot.commands.TeleOpLiftCommand;
 
 public class LiftSubsystem extends Subsystem {
     private OI oi;
-	private WPI_TalonSRX talon;
+    private WPI_TalonSRX talon;
 
-	public LiftSubsystem(OI oi){
-		this.oi = oi;
-	    this.talon = new WPI_TalonSRX(RobotMap.LIFT_TALON_ID);
-	}
+    public LiftSubsystem(OI oi) {
+        this.oi = oi;
+        this.talon = new WPI_TalonSRX(RobotMap.LIFT_TALON_ID);
+    }
 
     @Override
     protected void initDefaultCommand() {
@@ -21,7 +21,7 @@ public class LiftSubsystem extends Subsystem {
     }
 
     public void initDefaultCommandForTeleOp() {
-	    setDefaultCommand(new TeleOpLiftCommand(this, oi.getSecondaryController()));
+        setDefaultCommand(new TeleOpLiftCommand(this, oi.getSecondaryController()));
     }
 
     public WPI_TalonSRX getLiftTalon() {

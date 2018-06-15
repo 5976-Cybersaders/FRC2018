@@ -3,8 +3,6 @@ package org.usfirst.frc.team5976.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5976.robot.commands.autonomous.AutonomousTasksStatus;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 public class WaitForLiftRaised extends Command {
 
     @Override

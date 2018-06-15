@@ -4,15 +4,20 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5976.robot.SmartValue;
 
 public class DoNothingCommand extends Command {
-    private SmartValue delay;
+    private double delaySeconds;
+    private SmartValue smartDelay;
 
-    public DoNothingCommand(SmartValue delay) {
-        this.delay = delay;
+    public DoNothingCommand(SmartValue smartDelay) {
+        this.smartDelay = smartDelay;
+    }
+
+    public DoNothingCommand(double delay) {
+        delaySeconds = delay;
     }
 
     @Override
     protected void initialize() {
-        double delaySeconds = delay.getDouble();
+        if (smartDelay != null) delaySeconds = smartDelay.getDouble();
         setTimeout(delaySeconds);
         System.out.println("Delay: " + delaySeconds);
     }
